@@ -1,0 +1,127 @@
+.loginMessage {
+  color: red;
+  font-size: 16px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(249, 203, 203, 0.5);
+  /* Adjust the height as needed */
+}
+
+.body {
+  background-image: url("../assets/images/RML_Login.jpg");
+  height: 100vh;
+  display: flex;
+  align-items: center; /* Vertically center contents */
+}
+
+.container {
+  padding-top: 50px;
+  display: flex; /* Use flex to create a row layout */
+  align-items: center; /* Vertically center contents */
+  justify-content: center; /* Horizontally center contents */
+}
+
+.card-login {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width:80%; 
+  height: 70%;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid #e3e6f0;
+  border-radius: 0.35rem;
+}
+.card-login {
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.card-body-login  {
+  padding: 0;
+}
+
+.row-login {
+  display: flex;
+  width:100%;
+  flex-wrap: wrap;
+  height: 70%;
+}
+.video-container {
+  width: 100%;
+  height: 100%; /* Use full height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-element {
+  width: 100%;
+  max-width: 800px;
+  height: auto; /* Auto adjust height */
+  padding: 10px;
+}
+
+.col-lg-6 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.p-5 {
+  padding: 3rem ;
+  align-items: center;
+  justify-content: center;
+  
+
+}
+
+.h4 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.form-group-login {
+  border-radius: 25px;
+  padding: 0.5rem;
+}
+
+form input[type="password"],
+form input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: none;
+  }
+
+form.user-login .form-control-login {
+    font-size: 0.8rem;
+    border-radius: 10rem;
+    padding: 1rem 1rem;
+}
+
+form.user-login{
+  justify-content: center;
+}
+.btn-primary {
+  background-color: #4e73df;
+  border-color: #4e73df;
+  margin-top: 20px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 25px;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
+}
+
+.btn-primary:hover {
+  background-color: #2e59d9;
+  border-color: #2e59d9;
+}

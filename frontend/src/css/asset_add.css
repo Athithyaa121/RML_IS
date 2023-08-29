@@ -1,0 +1,144 @@
+footer {
+    background-color: #f2f2f2;
+    padding: 50px;
+}
+
+.form-line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    background-color: rgb(255, 255, 255);
+    color: #000000;
+    margin-right: 10px;
+}
+
+.form-line .form-icon {
+    padding: 10px;
+    background-color: #3c63e1;
+    color: white;
+}
+
+.form-line .form-input {
+    flex: 1;
+    padding: 5px;
+    border: none;
+    font-weight: 400;
+    /* border-radius: 5px; */
+}
+
+.form-line .form-checkbox {
+    margin-right: 15px;
+    font-weight: 400;
+}
+
+.form-line .form-select {
+    flex: 1;
+    padding: 0px;
+    border: none;
+}
+
+.form-checkbox {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.form-submit {
+    margin-top: 10px;
+}
+
+.form-input {
+    width: 100%;
+    /* margin-bottom : 20px; */
+    padding: 0px 30px 10px;
+    border: none;
+    border: #000000 1px solid #f5f5ff;
+    outline: none;
+    background-color: transparent;
+    border-radius: 5px;
+    color: #000000;
+    transition: .3s all;
+    border-radius: 0px;
+}
+
+form input[type="number"],
+form input[type="text"] {
+    width: 60%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: none;
+  }
+
+.form-ans {
+    width: 60%;
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+    max-height: max-content;
+    padding: 3px 5px 3px;
+}
+
+.form-ans-desc {
+    width: 60%;
+    height: 100px;
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+    max-height: max-content;
+    padding: 3px 5px 3px;
+}
+
+.form-autofill {
+    width: 60%;
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+    max-height: max-content;
+    padding: 3px 5px 5px;
+    background-color: whitesmoke;
+}
+
+.form-input:focus {
+    border: 2px solid #7b7b7b;
+}
+
+.form-select {
+    /* width : 80%; */
+    /* margin-bottom : 20px; */
+    width: 100%;
+    padding: 0px 30px 10px;
+    border: none;
+    border: 1px solid #aaaaaa;
+    outline: none;
+    background-color: transparent;
+    color: #000000;
+    transition: .3s all;
+    border-radius: 0px;
+}
+
+.form-select:focus {
+    border: 2px solid #ffffff;
+    width: 60%;
+}
+
+.form-checkbox {
+    background-color: rgb(255, 255, 255);
+}
+
+::placeholder {
+    color: #000000;
+}
+
+.topbar-brand-text {
+    font-size: 30px;
+    color: white;
+    text-align: center;
+    padding-left: 400px;
+    font-family: Garamond;
+    font-weight: bold;
+}
+
+.submit_button {
+    margin-left: 45%;
+    margin-right: 55%;
+    padding-top: 40px;
+}

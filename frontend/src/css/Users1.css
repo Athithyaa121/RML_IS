@@ -1,0 +1,92 @@
+/* Style for the first modal */
+.contact-modal1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 45%;
+  background-color: white; /* Replace 'bgcolor' with 'background-color' */
+  border: 1px solid #000;
+  padding: 5px; /* Replace 'p' with 'padding' */
+  height: fit-content;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+/* Style for the second modal */
+.contact-modal2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 43%;
+  background-color: white; /* Replace 'bgcolor' with 'background-color' */
+  border: 1px solid #000;
+  padding: 5px; /* Replace 'p' with 'padding' */
+  height: fit-content;
+  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+/* Style for User links */
+.UserStyle {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+table {
+    width: 600px;
+    border-collapse: collapse;
+  }
+  
+  th,
+  td {
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .left {
+    width: 800px;
+    background-color: lightgray;
+  }
+  
+  .right {
+    width: 400px;
+  }
+  
+  .square {
+    width: 160px;
+    height: 160px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .rectangle {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 20px auto;
+    width: 1180px;
+    align-items: left;
+    justify-content: left;
+    height: 20px;
+  }
+  
+  .cell {
+    background-color: white;
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    font-weight: bold;
+    color: black;
+    font-size: 18px;
+
+  }

@@ -1,0 +1,133 @@
+/* Global styles */
+.textarea-contact {
+    width: 800px;
+    height: 150px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    resize: none;
+  }
+  
+  /* Form styles */
+  .form-line-contact{
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    background-color: rgb(255, 255, 255);
+    color: #000000;
+    margin-right: 20px;
+  }
+  
+  .form-line-contact .form-icon-contact {
+    padding: 20px;
+    background-color: #3c63e1;
+    color: white;
+    border-top-left-radius: 5px;
+  }
+  
+  .form-line-contact .form-input-contact {
+    flex: 1;
+    padding: 20px;
+    border: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  
+  .form-line-contact .form-checkbox-contact {
+    margin-right: 5px;
+  }
+  
+  .form-line-contact .form-select-contact {
+    flex: 1;
+    padding: 20px;
+    border: none;
+  }
+  
+  .form-icon-contact {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  
+  .form-checkbox-contact {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  
+  .form-submit-contact {
+    margin-top: 10px;
+  }
+  
+  .form-input-contact {
+    width: 80%;
+    padding: 0px 30px 10px;
+    border: none;
+    border: #000000 1px solid #f5f5ff;
+    outline: none;
+    background-color: transparent;
+    border-radius: 5px;
+    color: #000000;
+    transition: .3s all;
+    border-radius: 0px;
+  }
+  
+  .form-input-contact:focus {
+    border: 2px solid #7b7b7b;
+  }
+  
+  .form-select-contact {
+    width: 80%;
+    padding: 0px 30px 10px;
+    border: none;
+    border: 1px solid #aaaaaa;
+    outline: none;
+    background-color: transparent;
+    color: #000000;
+    transition: .3s all;
+    border-radius: 0px;
+  }
+  
+  .form-select-contact:focus {
+    border: 2px solid #ffffff;
+  }
+  
+  .form-checkbox-contact {
+    background-color: rgb(255, 255, 255);
+  }
+  
+  /* Placeholder styles */
+  ::placeholder {
+    color: #000000;
+  }
+  
+  .textarea-contact::placeholder {
+    color: black;
+  }
+  
+  /* Footer styles */
+  footer {
+    background-color: #f2f2f2;
+    padding: 50px;
+  }
+
+  .text-center-contact{
+    width: 100px;
+    margin-left: 45%;
+  }
+  
+  /* Image styles */
+  .img1 {
+    width: 120px;
+    height: 60px;
+  }
+  
+  /* Topbar brand text styles */
+  .topbar-brand-text {
+    font-size: 30px;
+    color: white;
+    text-align: center;
+    padding-left: 400px;
+    font-family: Garamond;
+    font-weight: bold;
+  }
+  

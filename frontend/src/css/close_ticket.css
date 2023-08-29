@@ -1,0 +1,65 @@
+.label{
+    background-color: transparent;
+  border: none;
+  flex-direction: column;
+}
+  
+.btn {
+    border-radius: 4px;
+}  
+
+.details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .row1 {
+    display: flex;
+    align-items: center;
+  }
+  
+  .row1 label {
+    width: 150px;
+  }
+  
+  .row1 input,
+  .row1 textarea,
+  .row1 select {
+    flex: 1;
+  }
+  
+  .bottom .row1 {
+    margin-top: 20px;
+    margin-bottom: 2%;
+  }
+  
+
+  .vertical-line {
+    border-bottom: 1px solid rgb(204, 202, 202);
+    height: "20%"; /* Adjust the height as needed */
+  }
+  
+  /* style */
+.close_ticket_modal1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44%;
+  background-color: white;
+  border: 1px solid #000;
+  box-shadow: 24px;
+  padding: 5px;
+  height:fit-content;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}

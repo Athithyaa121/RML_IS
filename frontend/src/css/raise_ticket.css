@@ -1,0 +1,147 @@
+/* Global styles */
+.textarea-rt {
+    width: 800px;
+    height: 150px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    resize: none;
+  }
+  
+  footer {
+    background-color: #f2f2f2;
+    padding: 50px;
+  }
+  
+  /* Form styles */
+  .form-line-rt {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    background-color: rgb(255, 255, 255);
+    color: #000000;
+    margin-right: 20px;
+  }
+  
+  .form-line-rt .form-icon-rt {
+    padding: 20px;
+    background-color: #3c63e1;
+    color: white;
+  }
+  
+  .form-line-rt .form-input-rt {
+    flex: 1;
+    padding: 20px;
+    border: none;
+    font-weight: 500 !important ;
+  }
+  
+  .form-line-rt .form-checkbox-rt {
+    margin-right: 50px;
+    font-weight: 500;
+  }
+  
+  .form-line-rt .form-select-rt {
+    flex: 1;
+    padding: 20px;
+    border: none;
+  }
+  
+  .form-checkbox-rt {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  
+  .form-submit-rt {
+    margin-top: 10px;
+  }
+  
+  .form-input-rt {
+    width: 100%;
+    padding: 0px 30px 10px;
+    border: none;
+    border: #000000 1px solid #f5f5ff;
+    outline: none;
+    background-color: transparent;
+    border-radius: 5px;
+    color: #000000;
+    transition: .3s all;
+    border-radius: 0px;
+  }
+  
+  .form-ans-rt {
+    width: 60%;
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+    max-height: max-content;
+    padding: 14px 30px 14px;
+  }
+  
+  .form-ans-desc-rt {
+    width: 60%;
+    height: 100px;
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+    max-height: max-content;
+    padding: 14px 30px 14px;
+  }
+  
+  .form-autofill-rt {
+    width: 60%;
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+    max-height: max-content;
+    padding: 14px 30px 14px;
+    background-color: whitesmoke;
+  }
+  
+  .form-input-rt:focus {
+    border: 2px solid #7b7b7b;
+  }
+  
+  .form-select-rt {
+    /* width : 80%; */
+    /* margin-bottom : 20px; */
+    width: 100%;
+    padding: 0px 30px 10px;
+    border: none;
+    border: 1px solid #aaaaaa;
+    outline: none;
+    background-color: transparent;
+    color: #000000;
+    transition: .3s all;
+    border-radius: 0px;
+  }
+  
+  .form-select-rt:focus {
+    border: 2px solid #ffffff;
+  }
+  
+  .form-checkbox-rt {
+    background-color: rgb(255, 255, 255);
+  }
+  
+  /* Placeholder styles */
+  ::placeholder {
+    color: #000000;
+  }
+  
+  .topbar-brand-text {
+    font-size: 30px;
+    color: white;
+    text-align: center;
+    padding-left: 400px;
+    font-family: Garamond;
+    font-weight: bold;
+  }
+  
+  .submit_button-rt {
+    margin-left: 50%;
+    margin-right: 50%;
+    padding-top: 50px;
+  }
+  
