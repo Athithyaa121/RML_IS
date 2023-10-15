@@ -39,7 +39,7 @@ const Contact = () => {
   const handlesubmit = () => {
     if ( formData.message) {
     // Make an API call to your backend to send the email
-    axios.post('http://localhost:3001/contact', emaildata)
+    axios.post('http://localhost:3001/email/contact', emaildata)
       .then((response) => {
         console.log('Email sent successfully:', response.data);
         setEmailsent(true);

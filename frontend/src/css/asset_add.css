@@ -128,15 +128,6 @@ form input[type="text"] {
     color: #000000;
 }
 
-.topbar-brand-text {
-    font-size: 30px;
-    color: white;
-    text-align: center;
-    padding-left: 400px;
-    font-family: Garamond;
-    font-weight: bold;
-}
-
 .submit_button {
     margin-left: 45%;
     margin-right: 55%;

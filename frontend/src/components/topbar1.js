@@ -75,8 +75,8 @@ const Topbar1 = (props) => {
           <li className="nav-item active" onClick={toggleMasterDropdown}>
             <a href="#" className="nav-link ">
               <FaUserSecret className="sidebar-menu-icon" />
-              Masters
-              <FaAngleDown className={`sidebar-menu-dropdown-icon ${isMasterOpen ? 'open' : ''}`} />
+             <span>Masters</span>
+             <span><FaAngleDown className={`sidebar-menu-dropdown-icon ${isMasterOpen ? 'open' : ''}`} /></span>
             </a>
             {isMasterOpen && (
               <ul className="sub-menu">
@@ -116,8 +116,8 @@ const Topbar1 = (props) => {
           <li className="nav-item active" onClick={toggleTicketsDropdown}>
             <a href="#" className="nav-link">
               <FaTicketAlt className="sidebar-menu-icon" />
-              Tickets
-              <FaAngleDown className={`sidebar-menu-dropdown-icon ${isTicketsOpen ? 'open' : ''}`} />
+              <span>Tickets</span>
+              <span><FaAngleDown className={`sidebar-menu-dropdown-icon ${isTicketsOpen ? 'open' : ''}`} /></span>
             </a>
             {isTicketsOpen && (
               <ul className="sub-menu">
@@ -142,8 +142,8 @@ const Topbar1 = (props) => {
           <li className="nav-item active" onClick={toggleAssetsDropdown}>
             <a href="#" className="nav-link">
               <FaClipboardList className="sidebar-menu-icon" />
-              Assets
-              <FaAngleDown className={`sidebar-menu-dropdown-icon ${isAssetsOpen ? 'open' : ''}`} />
+             <span>Assets</span>
+             <span><FaAngleDown className={`sidebar-menu-dropdown-icon ${isAssetsOpen ? 'open' : ''}`} /></span>
             </a>
             {isAssetsOpen && (
               <ul className="sub-menu">

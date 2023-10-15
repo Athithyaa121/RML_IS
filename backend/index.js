@@ -1,8 +1,3 @@
-// import express from "express";
-// // import bodyParser from "body-parser";
-// import {sqlDb,poolPromise} from "./connection/db.js";
-// import cors from 'cors';
-
 const express = require ('express');
 const app = express();
 const db = require('./connection/db')
@@ -11,8 +6,8 @@ const sql = require('mssql');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken')
 const secretKey = 'RML';
-const nodemailer = require('nodemailer');
-// const jwt = require('jsonwebtoken');
+
+
 
 
 app.use(bodyParser.json());
@@ -20,98 +15,11 @@ const port = 3001;
 
 app.use(cors())
 
+const master = require('./routes/master_routes')
+app.use('/master' , master)
 
-
-
-// Define Routes here
-// const master = require('./routes/master_routes')
-// app.use('/master' , master)
-
-
-//EMAILS
-
-app.post('/send_email', (req, res) => {
-  const { message } = req.body;
-  
-  // Configure nodemailer to use your email provider
-  const transporter = nodemailer.createTransport({
-    service: 'gmail', // e.g., 'Gmail'
-    auth: {
-      user: 'athithyaa.ramesh@pec.edu',
-      pass: 'vjbqasuyrqxlhitq',
-    },
-  });
-
-  // Email details
-  const mailOptions = {
-    from: 'athithyaa.ramesh@pec.edu',
-    to: 'athithyaa121@gmail.com', // Replace with the recipient's email address
-    subject: 'Query from RML',
-    text: message,
-  };
-
-  // Send the email
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error('Error sending email:', error);
-      res.status(500).json({ error: 'Failed to send email' });
-    } else {
-      console.log('Email sent:', info.response);
-      res.status(200).json({ message: 'Email sent successfully' });
-    }
-  });
-});
-
-
-app.post('/contact', async (req, res) => {
-  const { subject, message, plantid } = req.body;
-
-  try {
-    // Create a connection pool
-    const pool = await db.poolPromise // Replace config with your database configuration
-
-    // Fetch admin's email from the database
-    const query = `SELECT User_mail_id FROM Mst_User WHERE Plant_id = @plantid AND User_role = 'admin'`;
-    const result = await pool.request()
-      .input('plantid', sql.Int, plantid)
-      .query(query);
-
-    if (result.recordset.length === 0) {
-      res.status(404).json({ error: 'Admin not found for the specified plant ID' });
-    } else {
-      const adminEmail = result.recordset[0].User_mail_id;
-      console.log(adminEmail,"admin email")
-
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'athithyaa.ramesh@pec.edu',
-          pass: 'vjbqasuyrqxlhitq',
-        },
-      });
-
-      const mailOptions = {
-        from: 'athithyaa.ramesh@pec.edu',
-        to: adminEmail,
-        subject: subject,
-        text: message,
-      };
-
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.error('Error sending email:', error);
-          res.status(500).json({ error: 'Failed to send email' });
-        } else {
-          console.log('Email sent:', info.response);
-          res.status(200).json({ message: 'Email sent successfully' });
-        }
-      });
-    }
-  } catch (error) {
-    console.error('Error fetching admin email:', error);
-    res.status(500).json({ error: 'Failed to fetch admin email' });
-  }
-});
+const email = require('./routes/email_routes')
+app.use('/email' , email)
 
 
 //TOKEN
@@ -171,84 +79,7 @@ app.get('/users', async (req, res) => {
 
 
 
-app.get('/department', async (req, res) => {
-  try {
-    const pool = await db.poolPromise
-    const response = await pool.request().query('SELECT * FROM Mst_Department where Active_status = 1')
-    res.json(response.recordset);
-  } catch (err) {
-    console.error('Error fetching data:', err);
-    res.status(500).json({ error: 'An error occurred' });
-  } finally {
-    await sql.close();
-  }
-});
 
-app.get('/plant', async (req, res) => {
-  try {
-    const pool = await db.poolPromise
-    const response = await pool.request().query('SELECT * FROM Mst_Plant where Active_status = 1')
-    res.json(response.recordset);
-  } catch (err) {
-    console.error('Error fetching data:', err);
-    res.status(500).json({ error: 'An error occurred' });
-  } finally {
-    await sql.close();
-  }
-});
-
-
-app.get('/product', async (req, res) => {
-  try {
-    const pool = await db.poolPromise
-    const response = await pool.request().query('SELECT * FROM Mst_Product where Active_status=1')
-    res.json(response.recordset);
-  } catch (err) {
-    console.error('Error fetching data:', err);
-    res.status(500).json({ error: 'An error occurred' });
-  } finally {
-    await sql.close();
-  }
-});
-
-app.get('/designation', async (req, res) => {
-  try {
-    const pool = await db.poolPromise
-    const response = await pool.request().query('SELECT * FROM Mst_Designation where Active_status=1')
-    res.json(response.recordset);
-  } catch (err) {
-    console.error('Error fetching data:', err);
-    res.status(500).json({ error: 'An error occurred' });
-  } finally {
-    await sql.close();
-  }
-});
-
-app.get('/service_category', async (req, res) => {
-  try {
-    const pool = await db.poolPromise
-    const response = await pool.request().query('SELECT * FROM Mst_Service_Category where Active_status=1')
-    res.json(response.recordset);
-  } catch (err) {
-    console.error('Error fetching data:', err);
-    res.status(500).json({ error: 'An error occurred' });
-  } finally {
-    await sql.close();
-  }
-});
-
-app.get('/root_cause', async (req, res) => {
-  try {
-    const pool = await db.poolPromise
-    const response = await pool.request().query('SELECT * FROM Mst_Root_Cause where Active_status=1')
-    res.json(response.recordset);
-  } catch (err) {
-    console.error('Error fetching data:', err);
-    res.status(500).json({ error: 'An error occurred' });
-  } finally {
-    await sql.close();
-  }
-});
 
 
 //END OF FETCHING DATA
@@ -851,12 +682,7 @@ app.put('/modifyUser/:id', async (req, res) => {
 app.get('/asset_list', async (req, res) => {
   try {
     const pool = await db.poolPromise
-    const response1 = await pool.request().query(`
-    SELECT Mst_Asset.*, Mst_User.Username , Mst_Department.Dept_name
-    FROM Mst_User 
-    INNER JOIN Mst_Department ON Mst_User.Dept_id = Mst_Department.Dept_id
-    INNER JOIN Mst_Asset ON Mst_Asset.Userid = Mst_User.Userid
-    where Mst_Asset.Active_status=1 and Mst_Asset.Modification_status = 0`)
+    const response1 = await pool.request().query(`EXEC asset_list`)
 
     const response2 = await pool.request().query(`
     SELECT * FROM Mst_Asset

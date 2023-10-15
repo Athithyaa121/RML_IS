@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import '../css/dashboard.css';
-// import userimage from '../css/user_image.jpeg';
+import '../css/topbar1.css';
 import axios from 'axios';
 import { useState } from 'react';
 import Topbar1 from './topbar1';
@@ -9,16 +9,33 @@ const Dashboard = () => {
   const user = {
     name: localStorage.getItem('userName'),
     department: localStorage.getItem('userdept'),
-    
-    plantcode:localStorage.getItem('userplant'),
-    email:localStorage.getItem('useremail'),
-    userid:localStorage.getItem('userId'),
+    plantcode: localStorage.getItem('userplant'),
+    email: localStorage.getItem('useremail'),
+    userid: localStorage.getItem('userId'),
+    role: localStorage.getItem('userrole')
   };
   const [items, setItems] = useState([]);
-  useEffect(()=>{
+  useEffect(() => {
     ticketFetch();
-  },[])
- 
+  }, [])
+
+  const [isRoleFlipped, setIsRoleFlipped] = useState(false);
+  const [isTicketFlipped, setIsTicketFlipped] = useState(false);
+  const [isAssetsFlipped, setIsAssetsFlipped] = useState(false);
+
+  // Function to toggle the flip state for the Role of the user
+  const toggleRoleFlip = () => {
+    setIsRoleFlipped(!isRoleFlipped);
+  };
+  // Function to toggle the flip state for the Ticket flashcard
+  const toggleTicketFlip = () => {
+    setIsTicketFlipped(!isTicketFlipped);
+  };
+
+  // Function to toggle the flip state for the Assets flashcard
+  const toggleAssetsFlip = () => {
+    setIsAssetsFlipped(!isAssetsFlipped);
+  };
   const ticketFetch = async () => {
     try {
       const response = await axios.get('http://example.com/api/items'); // Replace with your API endpoint URL
@@ -28,7 +45,7 @@ const Dashboard = () => {
       console.error('Error fetching data:', error);
     }
   };
-  
+
 
   const tickets = [
     { id: 1, ticketId: 'T001', status: 'In Progress' },
@@ -57,80 +74,147 @@ const Dashboard = () => {
 
   return (
     <Topbar1>
-    <div id="wrapper">
-      {/* Begin Page Content */}
-      <div className="container-fluid">
-        <div className="card shadow mb-4">
-          <div className="card-header py-3">
-            <h4 className="m-0 font-weight-bold text-primary">Dashboard</h4>
-            <div className="info-boxes1">
-              <div className="info-box1">
-                <div className="user-profile">
-                  <img className="img2"  alt="User" />
-                  <div>
-                    <h3>{user.name}</h3>
-                      <table className='table1'>
-                        <tr>
-                          <td className='td1'>Department: {user.department}</td>
-                          <td className='td1'>Plantcode: {user.plantcode}</td>
-                        </tr>
-                        <tr>
-                        <td className='td1'>User id: {user.userid}</td>
-                        <td className='td1'>Email: {user.email}</td>
-                        </tr>
-                      </table>
+      <div id="wrapper">
+        {/* Begin Page Content */}
+        <div className="container-fluid">
+          <div className="card shadow mb-4">
+            <div className="card-header py-3">
+              <h4 className="mb-4 font-weight-bold text-primary" >Dashboard</h4>
+              <div className="row-dashboard">
+                {/* Earnings (Monthly) Card Example */}
+                <div className="col-xl-3 col-md-6 mb-4">
+                  <div className="card border-left-primary shadow h-100 py-2">
+                    <div className="card-body">
+                      <div className="row no-gutters align-items-center">
+                        <div className="col mr-2">
+                          <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                          User Name
+                          </div>
+                          <div className="h5 mb-0 font-weight-bold text-gray-800">
+                          {user.name}
+                          </div>
+                        </div>
+                        <div className="col-auto">
+                          <i className="fas fa-comments fa-2x text-gray-300" />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="info-boxes ">
-                <div className="info-box">
-                  <div className="left1"><h4>Current Tickets</h4></div>
-                  <div className="right1"><h1>{numberOfTickets}</h1></div>
-                </div>
-                
-                <div className="info-box">
-                  <div className="left1"><h4>Number of Assets</h4></div>
-                  <div className="right1"><h1>{numberOfAssets}</h1></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <h3>Tickets</h3>
-          <div className="ticket-list-container">
-            <div className="horizontal-scroll-wrapper squares">
-              <div className="ticket-list">
-                {tickets.map((ticket) => (
-                  <div key={ticket.id} className="item-container">
-                    <p>Ticket ID: {ticket.ticketId}</p>
-                    <p>Status: {ticket.status}</p>
+                {/* Pending Requests Card Example */}
+                <div className="col-xl-3 col-md-6 mb-4">
+                  <div className="card border-left-primary shadow h-100 py-2">
+                    <div className="card-body">
+                      <div className="row-dashboard no-gutters align-items-center">
+                        <div className="col mr-2">
+                          <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                          User id
+                          </div>
+                          <div className="h5 mb-0 font-weight-bold text-gray-800">
+                          {user.userid}
+                          </div>
+                        </div>
+                        <div className="col-auto">
+                          <i className="fas fa-dollar-sign fa-2x text-gray-300" />
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
-          </div>
+                </div>
+              {/* Earnings (Monthly) Card Example */}
 
-          <div><hr style={{ borderWidth: 'transparent' }}></hr></div>
-
-          <h3>Assets</h3>
-          <div className="asset-list-container">
-            <div className="horizontal-scroll-wrapper squares">
-              <div className="asset-list">
-                {assets.map((asset) => (
-                  <div key={asset.id} className="item-asset-container">
-                    <p>Asset ID: {asset.assetId}</p>
-                    <p>Status: {asset.aStatus}</p>
+                <div className="col-xl-3 col-md-6 mb-4">
+                  <div className="card border-left-primary shadow h-100 py-2">
+                    <div className="card-body">
+                      <div className="row-dashboard no-gutters align-items-center">
+                        <div className="col mr-2">
+                          <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                          Department 
+                           </div>
+                          <div className="h5 mb-0 font-weight-bold text-gray-800">
+                          {user.department}
+                          </div>
+                        </div>
+                        <div className="col-auto">
+                          <i className="fas fa-calendar fa-2x text-gray-300" />
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                ))}
+                </div>
+                {/* Earnings (Monthly) Card Example */}
+                <div className="col-xl-3 col-md-6 mb-4">
+                  <div className="card border-left-primary shadow h-100 py-2">
+                    <div className="card-body">
+                      <div className="row-dashboard no-gutters align-items-center">
+                        <div className="col mr-2">
+                          <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                          Plantcode
+                          </div>
+                          <div className="h5 mb-0 font-weight-bold text-gray-800">
+                          {user.plantcode}
+                          </div>
+                        </div>
+                        <div className="col-auto">
+                          <i className="fas fa-dollar-sign fa-2x text-gray-300" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>                
+              </div>
+
+              {/* <table class="user-table">
+                <tr>
+                  <td style={{ fontSize: "20px" }} rowspan="5">{user.name}</td>
+                  <td>Department: {user.department}</td>
+                </tr>
+                <tr>
+                  <td>Plantcode: {user.plantcode}</td>
+                </tr>
+                <tr>
+                  <td>User id: {user.userid}</td>
+                </tr>
+                <tr>
+                  <td>Email: {user.email}</td>
+                </tr>
+              </table> */}
+              <hr style={{ border: '10' }}></hr>
+              <div className="flashcard-container">
+                <div
+                  className={`flashcard ${isRoleFlipped ? 'flipped' : ''}`}
+                  onClick={toggleRoleFlip}
+                >
+                  <div className="inner">
+                    <div className="front">Role</div>
+                    <div className="back">{user.role}</div>
+                  </div>
+                </div>
+                <div
+                  className={`flashcard ${isTicketFlipped ? 'flipped' : ''}`}
+                  onClick={toggleTicketFlip}
+                >
+                  <div className="inner">
+                    <div className="front">Ticket</div>
+                    <div className="back">{numberOfTickets}</div>
+                  </div>
+                </div>
+                <div
+                  className={`flashcard ${isAssetsFlipped ? 'flipped' : ''}`}
+                  onClick={toggleAssetsFlip}
+                >
+                  <div className="inner">
+                    <div className="front">Assets</div>
+                    <div className="back">{numberOfAssets}</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-
       </div>
-    </div>
     </Topbar1>
   );
 };
 
-export default Dashboard;
+export default Dashboard;

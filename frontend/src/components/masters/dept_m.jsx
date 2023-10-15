@@ -1,6 +1,7 @@
 import { Button, Modal, Form } from 'react-bootstrap';
-import '../css/users.css';
-import '../vendor/fontawesome-free/css/all.min.css';
+
+import '../../css/masters.css';
+import '../../vendor/fontawesome-free/css/all.min.css';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -8,7 +9,7 @@ import { red } from '@mui/material/colors';
 import EditIcon from '@mui/icons-material/Edit';
 import { blue } from '@mui/material/colors';
 import * as XLSX from 'xlsx';
-import Topbar1 from './topbar1';
+import Topbar1 from '../topbar1';
 
 
 const Dept_M = () => {
@@ -24,7 +25,7 @@ const Dept_M = () => {
   useEffect(() => {
     // Fetch data from the API endpoint
     axios
-      .get('http://localhost:3001/department')
+      .get('http://localhost:3001/master/department')
       .then((response) => {
         setData(response.data);
       })
@@ -38,7 +39,7 @@ const Dept_M = () => {
   }, []);
 
   const fetchDepartments = () => {
-    axios.get('http://localhost:3001/department')
+    axios.get('http://localhost:3001/master/department')
       .then((response) => {
         setData(response.data);
       })

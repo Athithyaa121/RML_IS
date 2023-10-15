@@ -19,18 +19,10 @@ footer {
     border-top-left-radius: 5px;                      
 } 
 
-/* .form-line-users
-.form-input-users[type="password"],
-.form-input-users[type="password"] {            
-    flex: 1;            
-    padding: 20px;            
-    border: none;           
-    border-top-right-radius: 5px;            
-    border-bottom-right-radius: 5px;          
-}  */
-
 .form-line-users [type="password"],
-.form-line-users [type="text"]
+.form-line-users [type="text"],
+.form-line-users [type="email"],
+.form-line-users [type="number"]
  {            
     flex: 1;            
     padding: 20px;            
@@ -60,8 +52,6 @@ footer {
     margin-right: 20px;
 
 }
-
-
 
 .form-line1-users .form-icon-users {
     padding: 20px;
@@ -145,14 +135,6 @@ footer {
     color: #000000;    
 } 
 
-.topbar-brand-text{    
-    font-size: 30px;   
-     color: white;    
-     text-align: center;    
-     padding-left:400px ;    
-     font-family: Garamond;    
-     font-weight: bold;
-}
 .submit_button-users {
     margin-left: 50%;
     margin-right: 50%;

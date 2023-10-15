@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
-import '../css/users.css';
-import '../vendor/fontawesome-free/css/all.min.css';
+import '../../css/masters.css';
+import '../../vendor/fontawesome-free/css/all.min.css';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { red } from '@mui/material/colors';
 import EditIcon from '@mui/icons-material/Edit';
 import { blue } from '@mui/material/colors';
-import Topbar1 from './topbar1';
+import Topbar1 from '../topbar1';
 
 
 const Plant_M = () => {
@@ -28,7 +28,7 @@ const Plant_M = () => {
   useEffect(() => {
     // Fetch data from the API endpoint
     axios
-      .get('http://localhost:3001/plant')
+      .get('http://localhost:3001/master/plant')
       .then((response) => {
         setData(response.data);
       })
@@ -124,7 +124,7 @@ const Plant_M = () => {
   }, []);
 
   const fetchPlants = () => {
-    axios.get('http://localhost:3001/plant')
+    axios.get('http://localhost:3001/master/plant')
       .then((response) => {
         setData(response.data);
       })
@@ -263,9 +263,12 @@ const Plant_M = () => {
               href="#"
               className="d-none d-sm-inline-block btn btn-sm btn-success shadow float-right"
             >
-              <span style={{ fontWeight: "bold", marginRight: 10 }}>
+              <button 
+              style={{ fontWeight: "bold", marginRight: 10 , background : "transparent",border:"none" ,color:"white"}}
+              onClick={exportToExcel}
+              >
                 Generate Report
-              </span>
+              </button>
               <i className="fas fa-file-excel" />
             </a>
           </h1>
@@ -351,7 +354,7 @@ const Plant_M = () => {
                       <th>Plant Name</th>
                       <th>Plant Location</th>
                       <th onClick="false" style={{ color: "#3c63e1" }}>
-                        <span style={{ color: "white" }}> Modify</span>
+                        <span style={{ color: "white" }}> Action</span>
                       </th>
                     </tr>
                   </thead>
@@ -406,13 +409,13 @@ const Plant_M = () => {
                               <Button className='btn-danger' variant="" onClick={handleModalClose2}>
                                 Close
                               </Button>
-                              <Button className='btn-success' onClick={handleModificationSubmit} type="submit" >
+                              <Button className='btn-success' variant='' onClick={handleModificationSubmit} type="submit" >
                                 Modify
                               </Button>
 
                             </Modal.Footer>
                           </Modal>
-                          <DeleteIcon sx={{ color: red[500] }} className="danger" onClick={() => handleDelete(item.Plant_code, item.Plant_name)}></DeleteIcon>
+                          <DeleteIcon sx={{ color: red[500] , fontSize:30}} style={{marginLeft:20}} className="danger" onClick={() => handleDelete(item.Plant_code, item.Plant_name)}></DeleteIcon>
                         </td>
                       </tr>
                     ))}

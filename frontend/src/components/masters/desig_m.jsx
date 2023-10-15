@@ -1,37 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
-import '../css/users.css';
-import '../vendor/fontawesome-free/css/all.min.css';
+import '../../css/masters.css';
+import '../../vendor/fontawesome-free/css/all.min.css';
 import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { red } from '@mui/material/colors';
 import EditIcon from '@mui/icons-material/Edit';
 import { blue } from '@mui/material/colors';
 import * as XLSX from 'xlsx';
-import Topbar1 from './topbar1';
+import Topbar1 from '../topbar1';
 
-const Product_M = () => {
+const Desig_M = () => {
   const [data, setData] = useState([]);
   const [modalShow1, setModalShow1] = React.useState(false);
   const [modalShow2, setModalShow2] = React.useState(false);
   const [modifiedCode, setModifiedCode] = useState('');
   const [modifiedName, setModifiedName] = useState('');
   const [selectedMenuItem, setSelectedMenuItem] = useState(null);
-  
-  const [inputData, setInputData] = useState({
-    Product_code: '',
-    Product_name: ''
-  });
-  
 
-  
   useEffect(() => {
     // Fetch data from the API endpoint
     axios
-      .get('http://localhost:3001/product')
+      .get('http://localhost:3001/master/designation')
       .then((response) => {
         setData(response.data);
-        
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -39,26 +31,23 @@ const Product_M = () => {
   }, []);
 
   useEffect(() => {
-    fetchProducts();
+    fetchDesignation();
   }, []);
 
-  const fetchProducts = () => {
-    axios.get('http://localhost:3001/product')
+  const fetchDesignation = () => {
+    axios.get('http://localhost:3001/master/designation')
       .then((response) => {
         setData(response.data);
       })
       .catch((error) => {
         console.error(error);
       });
-  }
-
-  const handleNumberChange1 = (e) => {
-    setInputData({ ...inputData, Product_code: e.target.value });
   };
 
-  const handleNameChange1 = (e) => {
-    setInputData({...inputData,Product_name : e.target.value});
-  };
+  const [inputData, setInputData] = useState({
+    Designation_id: '',
+    Designation: ''
+  });
 
   const userid = localStorage.getItem('userId');
 
@@ -69,27 +58,27 @@ const Product_M = () => {
 
   const handleAdd = () => {
     // Check constraints before making the API call
-    if (!inputData.Product_code) {
-      window.alert('Please enter a product code');
+    if (!inputData.Designation_id) {
+      window.alert('Please enter a designation ID');
       return;
     }
   
-    if (!inputData.Product_name) {
-      window.alert('Please enter a product name');
+    if (!inputData.Designation) {
+      window.alert('Please enter a designation');
       return;
     }
   
     axios
-      .post('http://localhost:3001/addProduct', dataToSend)
+      .post('http://localhost:3001/addDesignation', dataToSend)
       .then((response) => {
-        fetchProducts();
+        fetchDesignation();
         console.log(response.data); // Optional: Handle success response
         setInputData({
-          Product_code: '',
-          Product_name: '',
+          Designation_id: '',
+          Designation: '',
         });
         handleModalClose1();
-        window.alert('Product added successfully');
+        window.alert('Designation added successfully');
       })
       .catch((error) => {
         if (error.response && error.response.status === 400) {
@@ -102,32 +91,30 @@ const Product_M = () => {
   };
   
 
-  const handleDelete = (recordId, productName) => {
+  const handleDelete = (recordId, designationName) => {
     
-    if (!window.confirm(`Are you sure you want to delete the product "${productName}"?`)) {
+    if (!window.confirm(`Are you sure you want to delete the designation "${designationName}"?`)) {
       return;
     }
 
     const requestData = {
       userid: userid,
-      // Add other data if needed
     };
   
     axios
-      .put(`http://localhost:3001/deleteProduct/${recordId}`,requestData)
+      .put(`http://localhost:3001/deleteDesignation/${recordId}`, requestData)
       .then((response) => {
-        fetchProducts();
+        fetchDesignation();
         console.log(response.data);
-        window.alert(`Product "${productName}" deleted successfully`);
-        // Optionally update your UI after successful deletion (e.g., fetch updated data)
+        window.alert(`Designation "${designationName}" deleted successfully`);
       })
       .catch((error) => {
         console.error(error);
-        // Optional: Handle error response
       });
   };
   
-    
+  
+
   const handleModalClose1 = () => {
     setModalShow1(false);
   };
@@ -141,15 +128,22 @@ const Product_M = () => {
   };
 
 
-  
+  const handleNameChange1 = (e) => {
+    setInputData({ ...inputData, Designation: e.target.value });
+  };
+
+  const handleNumberChange1 = (e) => {
+    setInputData({ ...inputData, Designation_id: e.target.value });
+  };
+
   
 
-  //Modifying
+//Modifying
 
-const handleModifyshow = (item) => {
-  setSelectedMenuItem(item.Product_id);
-  setModifiedCode(item.Product_code);
-  setModifiedName(item.Product_name);
+const handleModalShow2 = (item) => {
+  setSelectedMenuItem(item.Designation_id);
+  setModifiedCode(item.Designation_id);
+  setModifiedName(item.Designation);
   setModalShow2(true);
 };
 
@@ -157,7 +151,6 @@ const handleModifyshow = (item) => {
 const handleModifiedNameChange = (event) => {
   setModifiedName(event.target.value);
 };
-
 
 
 
@@ -171,17 +164,16 @@ const handleModificationSubmit = () => {
   const updatedData = {
     code: modifiedCode,
     name: modifiedName,
-    userid:userid
+    userid: userid
   };
 
   axios
-    .put(`http://localhost:3001/modifyProduct/${selectedMenuItem}`, updatedData)
+    .put(`http://localhost:3001/modifyDesignation/${selectedMenuItem}`, updatedData)
     .then((response) => {
       // Handle the response
       console.log(response.data);
-      fetchProducts();
       // Optionally update your UI or perform any other actions
-      window.alert('Product updated successfully');
+      window.alert('Designation updated successfully');
       handleModalClose2();
     })
     .catch((error) => {
@@ -189,7 +181,6 @@ const handleModificationSubmit = () => {
       // Handle the error
     });
 };
-
 
   // EXCEL EXPORTING
 
@@ -224,16 +215,20 @@ const handleModificationSubmit = () => {
     const excelUrl = URL.createObjectURL(excelData);
     const link = document.createElement('a');
     link.href = excelUrl;
-    link.download = 'Product_master.xlsx';
+    link.download = 'Designation_Master.xlsx';
     link.click();
   }
   
 
 
+
+
+
+
+
   return (
     <>
     <Topbar1>
-
       {/* Page Wrapper */}
       <div id="wrapper">
         {/* Begin Page Content */}
@@ -257,14 +252,14 @@ const handleModificationSubmit = () => {
           <div className="card shadow mb-4">
             <div className="card-header py-3">
               <h4 className="m-0 font-weight-bold text-primary">
-                Product Master
+                Designation Master
                 <>
 
                   {/* Button trigger modal */}
                   <button
                     type="button"
-                    style={{ marginRight: 5 }}
                     className="btn btn-primary float-right"
+                    style={{ marginRight: 5 }}
                     data-toggle="modal"
                     data-target="#exampleModalCenter"
                     onClick={handleModalShow1}
@@ -275,32 +270,32 @@ const handleModificationSubmit = () => {
                   </button>
                   <Modal show={modalShow1} onHide={handleModalClose1}>
                     <Modal.Header closeButton className='bg-primary text-white'>
-                      <Modal.Title >Add a Product</Modal.Title>
+                      <Modal.Title >Add a Designation</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                       <Form>
                         <Form.Group>
-                          <Form.Label>Product Code:</Form.Label>
+                          <Form.Label>Designation ID:</Form.Label>
                           <Form.Control
                             className='form-input-master'
                             type="number"
-                            value={inputData.Product_code}
+                            value={inputData.Designation_id}
                             onChange={handleNumberChange1}
                           />
                         </Form.Group>
                         <Form.Group>
-                          <Form.Label>Product Name:</Form.Label>
+                          <Form.Label>Designation:</Form.Label>
                           <Form.Control
                             className='form-input-master'
                             type="text"
-                            value={inputData.Product_name}
+                            value={inputData.Designation}
                             onChange={handleNameChange1}
                           />
                         </Form.Group>
                       </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                      <Button className='btn-danger' variant="" onClick={handleModalClose1}>
+                      <Button className='btn-danger' variant="" onClick={handleDelete}>
                         Decline
                       </Button>
                       <Button className='btn-success' variant="" onClick={handleAdd}>
@@ -324,19 +319,18 @@ const handleModificationSubmit = () => {
                   <thead style={{ backgroundColor: "#3c63e1", color: "white" }}>
                     <tr>
                       <th>Sl.No</th>
-                      <th>Product Code</th>
-                      <th>Product Name</th>
-                      <th>Modify</th>
+                      <th>Designation ID</th>
+                      <th>Designation </th>
+                      <th >Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     {data.map((item, index) => (
-                      <tr key={index}>
+                      <tr key={item.id}>
                         <td> {index + 1}</td>
-                        <td>{item.Product_code}</td>
-                        <td>{item.Product_name}</td>
+                        <td>{item.Designation_id}</td>
+                        <td>{item.Designation}</td>
                         <td>
-
                           <button
                             style={{
                               backgroundColor: "transparent",
@@ -345,22 +339,23 @@ const handleModificationSubmit = () => {
                             }}
                           >
                             <EditIcon
-                              style={{ color: blue[800] }} onClick={() => handleModifyshow(item)}
+                              style={{ color: blue[800] }} onClick={() => handleModalShow2(item)}
                               baseclassname="fas"
                               className="fa-plus-circle"
                               sx={{ fontSize: 30 }}
                             />
                           </button>
 
+
                           {selectedMenuItem && (
                             <Modal show={modalShow2} onHide={handleModalClose2}>
                               <Modal.Header closeButton className="bg-primary text-white">
-                                <Modal.Title>Modify Product</Modal.Title>
+                                <Modal.Title>Modify Designation</Modal.Title>
                               </Modal.Header>
                               <Modal.Body>
                                 <Form onSubmit={handleModificationSubmit}>
                                   <Form.Group>
-                                    <Form.Label>Product Code:</Form.Label>
+                                    <Form.Label>Designation ID:</Form.Label>
                                     <Form.Control
                                       className='form-input-master'
                                       type="text"
@@ -369,7 +364,7 @@ const handleModificationSubmit = () => {
                                     />
                                   </Form.Group>
                                   <Form.Group>
-                                    <Form.Label>Product Name:</Form.Label>
+                                    <Form.Label>Designation:</Form.Label>
                                     <Form.Control
                                       className='form-input-master'
                                       type="text"
@@ -381,27 +376,19 @@ const handleModificationSubmit = () => {
                                     <Button className='btn-danger' variant="" onClick={handleModalClose2}>
                                       Decline
                                     </Button>
-                                    <Button className='btn-success' type="submit" variant="">
-                                      Add
+                                    <Button className='btn-success' type='sumbit' variant="">
+                                      Modify
                                     </Button>
-                                  </Modal.Footer>
-                                </Form>
 
+                                  </Modal.Footer>
+
+                                </Form>
                               </Modal.Body>
 
                             </Modal>
                           )}
 
-                          <button
-                            style={{ backgroundColor: "transparent", border: "none", marginLeft: "10px" }}
-                          >
-                            <DeleteIcon
-                              sx={{ color: red[500] }}
-                              className="danger"
-                              onClick={() => handleDelete(item.Product_id, item.Product_name)}
-                            />
-                          </button>
-
+                          <DeleteIcon sx={{ color: red[500] }} className="danger" onClick={() => handleDelete(item.Designation_id)}></DeleteIcon>
                         </td>
                       </tr>
                     ))}
@@ -418,4 +405,4 @@ const handleModificationSubmit = () => {
   );
 }
 
-export default Product_M;
+export default Desig_M;

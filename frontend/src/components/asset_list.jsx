@@ -1,16 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Modal, Button, Typography, Box, Backdrop, TextField } from '@mui/material';
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
-import axios from 'axios';
-import { useSpring, animated } from 'react-spring';
-import EditIcon from '@mui/icons-material/Edit';
-import { red } from '@mui/material/colors';
-import { blue } from '@mui/material/colors';
-import moment from 'moment';
-import '../css/asset_list.css';
-import * as XLSX from 'xlsx';
-import Topbar1 from './topbar1';
+import {
+  Modal,
+  Button,
+  Typography,
+  Box,
+  Backdrop,
+  TextField,
+} from "@mui/material";
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
+import axios from "axios";
+import { useSpring, animated } from "react-spring";
+import EditIcon from "@mui/icons-material/Edit";
+import { red } from "@mui/material/colors";
+import { blue } from "@mui/material/colors";
+import moment from "moment";
+import "../css/asset_list.css";
+import * as XLSX from "xlsx";
+import Topbar1 from "./topbar1";
+import "../css/search_bar.css";
 
 const Asset_list = () => {
   const [data, setData] = useState([]);
@@ -37,23 +51,19 @@ const Asset_list = () => {
   const [status, setStatus] = useState([]);
   const [remarks, setRemarks] = useState([]);
 
-
   const [isEditModalOpen, setEditModalOpen] = React.useState(false);
   const [editedAsset, setEditedAsset] = React.useState({});
 
-
-
-
-  const [filter, setFilter] = useState('Status');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [searchInput, setSearchInput] = useState('');
+  const [filter, setFilter] = useState("Status");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [searchInput, setSearchInput] = useState("");
   const [filteredData, setFilteredData] = useState([]);
 
-  const formattedDoi = moment(dateofinstall).format('DD-MM-YYYY');
-  const formattedPo = moment(podate).format('DD-MM-YYYY');
-  const formattedInvoice = moment(invoicedate).format('DD-MM-YYYY');
-  const formattedWarranty = moment(warranty).format('DD-MM-YYYY');
+  const formattedDoi = moment(dateofinstall).format("DD-MM-YYYY");
+  const formattedPo = moment(podate).format("DD-MM-YYYY");
+  const formattedInvoice = moment(invoicedate).format("DD-MM-YYYY");
+  const formattedWarranty = moment(warranty).format("DD-MM-YYYY");
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
@@ -70,23 +80,23 @@ const Asset_list = () => {
   const handleSearchSubmit = (event) => {
     event.preventDefault();
 
-    filterData()
+    filterData();
   };
 
   const AMstyle = {
-    margin: '1rem',
-    pointerEvents: 'none',
-    cursor: 'initial'
+    margin: "1rem",
+    pointerEvents: "none",
+    cursor: "initial",
   };
 
   const AMstyle1 = {
-    margin: '1rem',
+    margin: "1rem",
   };
 
   const filterData = () => {
     let filteredResults = data;
 
-    if (filter !== 'Status') {
+    if (filter !== "Status") {
       filteredResults = filteredResults.filter((item) => {
         return item.Asset_status === filter;
         // return item.Asset_status.toLowerCase().includes(filter) ;
@@ -95,7 +105,6 @@ const Asset_list = () => {
 
     if (startDate && endDate) {
       filteredResults = filteredResults.filter((item) => {
-
         const itemDate = new Date(item.Created_on);
         return itemDate >= new Date(startDate) && itemDate <= new Date(endDate);
       });
@@ -106,11 +115,13 @@ const Asset_list = () => {
         // Assuming the columns to be searched are 'Username', 'Department', and 'Plant_name'
         return (
           (item.Asset_id && item.Asset_id === parseInt(searchInput)) ||
-          (item.Username && item.Username.toLowerCase().includes(searchInput.toLowerCase())) ||
-          (item.Dept_name && item.Dept_name.toLowerCase().includes(searchInput.toLowerCase())) ||
-          (item.Asset_sl_no && item.Asset_sl_no.toLowerCase().includes(searchInput.toLowerCase()))
+          (item.Username &&
+            item.Username.toLowerCase().includes(searchInput.toLowerCase())) ||
+          (item.Dept_name &&
+            item.Dept_name.toLowerCase().includes(searchInput.toLowerCase())) ||
+          (item.Asset_sl_no &&
+            item.Asset_sl_no.toLowerCase().includes(searchInput.toLowerCase()))
           // (item.Designation && item.Designation.toLowerCase().includes(searchInput.toLowerCase()))
-
         );
       });
     }
@@ -140,7 +151,7 @@ const Asset_list = () => {
     setIp(item.Asset_ip);
     setStatus(item.Asset_status);
     setOpen(true);
-  }
+  };
 
   const handleEditClick = (item) => {
     setEditedAsset(item.Asset_id);
@@ -171,100 +182,103 @@ const Asset_list = () => {
     setStatus(event.target.value);
   };
 
-
   const handleAssettypeChange = (event) => {
     setAssettype(event.target.value);
-  }
+  };
 
   const handleMakeChange = (event) => {
     setMake(event.target.value);
-  }
+  };
 
   const handleModelChange = (event) => {
     setModel(event.target.value);
-  }
-
+  };
 
   const handlePonoChange = (event) => {
     setPono(event.target.value);
-  }
+  };
 
   const handleMsoChange = (event) => {
     setMso(event.target.value);
-  }
+  };
 
   const handleUseridChange = (event) => {
     setUserid(event.target.value);
-  }
+  };
 
   const handleSerialnoChange = (event) => {
     setSerialno(event.target.value);
-  }
+  };
 
   const handleHostnameChange = (event) => {
     setHostname(event.target.value);
-  }
+  };
 
   const handleDateofinstallChange = (event) => {
     setDateofinstall(event.target.value);
-  }
+  };
 
   const handlePodateChange = (event) => {
     setPodate(event.target.value);
-  }
+  };
 
   const handleInvoicedateChange = (event) => {
     setInvoicedate(event.target.value);
-  }
+  };
 
   const handleOsChange = (event) => {
     setOs(event.target.value);
-  }
+  };
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
-  }
+  };
 
   const handleWarrantyChange = (event) => {
     setWarranty(event.target.value);
-  }
+  };
 
   const handleRemarksChange = (event) => {
     setRemarks(event.target.value);
-  }
+  };
 
   const handleIpChange = (event) => {
     setIp(event.target.value);
-  }
+  };
 
   const handleUserdeptChange = (event) => {
     setUserDept(event.target.value);
-  }
+  };
 
   const handleInvoicenoChange = (event) => {
     setInvoiceno(event.target.value);
-  }
+  };
 
   const handleKeyChange = (event) => {
     setKey(event.target.value);
-  }
-
+  };
 
   const handleModificationSubmit = () => {
-
-    if (((userid === '' && status !== 'Scrap') || (userid !== '' && status === 'Scrap')) || !ip || !mso || !hostname || !key || !os) {
-
-      window.alert('Fill in the required fields correctly.');
+    if (
+      (userid === "" && status !== "Scrap") ||
+      (userid !== "" && status === "Scrap") ||
+      !ip ||
+      !mso ||
+      !hostname ||
+      !key ||
+      !os
+    ) {
+      window.alert("Fill in the required fields correctly.");
       return;
     }
 
-    if (status === 'New') {
+    if (status === "New") {
       // Check if the status is "New"
       window.alert('Status cannot be "New".');
       return;
     }
 
-    if (status !== 'Scrap' && !userid) {
+    if (status !== "Scrap" && !userid) {
       // Check if the status is not "Scrap" and userid is empty
       window.alert('User ID is a required field for non-"Scrap" assets.');
       return;
@@ -291,7 +305,7 @@ const Asset_list = () => {
       invoiceno: invoiceno,
       key: key,
       remarks: remarks,
-      status: status
+      status: status,
     };
 
     axios
@@ -300,7 +314,7 @@ const Asset_list = () => {
         // Handle the response
         console.log(response.data);
         // Optionally update your UI or perform any other actions
-        window.alert('Plant updated successfully');
+        window.alert("Plant updated successfully");
         handleClose();
         fetchAssets();
       })
@@ -308,10 +322,7 @@ const Asset_list = () => {
         console.error(error);
         // Handle the error
       });
-
   };
-
-
 
   //User Modification
 
@@ -326,16 +337,12 @@ const Asset_list = () => {
       .get(`http://localhost:3001/username?userid=${userid}`)
       .then((response) => {
         setUsername(response.data[0].Username);
-        setUserDept(response.data[0].Dept_name)
+        setUserDept(response.data[0].Dept_name);
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       });
   };
-
-
-
-
 
   const handleClose = () => {
     setSelectedAsset({});
@@ -343,7 +350,6 @@ const Asset_list = () => {
     setEditModalOpen(false);
     setEditedAsset({});
   };
-
 
   const Fade = React.forwardRef(({ children, in: open }, ref) => {
     const style = useSpring({
@@ -361,7 +367,7 @@ const Asset_list = () => {
   useEffect(() => {
     // Fetch data from the API endpoint
     axios
-      .get('http://localhost:3001/asset_list')
+      .get("http://localhost:3001/asset_list")
       .then((response) => {
         const { response1, response2 } = response.data;
 
@@ -373,7 +379,7 @@ const Asset_list = () => {
         setData(combinedData);
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       });
   }, []);
 
@@ -382,9 +388,9 @@ const Asset_list = () => {
   }, []);
 
   const fetchAssets = () => {
-    axios.get('http://localhost:3001/asset_list')
+    axios
+      .get("http://localhost:3001/asset_list")
       .then((response) => {
-
         const { response1, response2 } = response.data;
 
         const dataFromResponse1 = response1;
@@ -399,14 +405,11 @@ const Asset_list = () => {
       });
   };
 
-
   // EXCEL EXPORTING
-
-
 
   function exportToExcel() {
     // Get the table element
-    const table = document.getElementById('Assettable');
+    const table = document.getElementById("Assettable");
 
     // Get the number of columns in the table
     const columnCount = table.rows[0].cells.length;
@@ -418,190 +421,554 @@ const Asset_list = () => {
     const worksheet = XLSX.utils.table_to_sheet(table, { range: columnRange });
 
     // Remove the last column header from the worksheet
-    const lastColumnHeader = XLSX.utils.encode_cell({ r: 0, c: columnCount - 1 });
+    const lastColumnHeader = XLSX.utils.encode_cell({
+      r: 0,
+      c: columnCount - 1,
+    });
     delete worksheet[lastColumnHeader];
 
     // Create a new workbook and add the worksheet
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
     // Generate the Excel file
-    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
 
     // Save the file
-    const excelData = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const excelData = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
     const excelUrl = URL.createObjectURL(excelData);
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = excelUrl;
-    link.download = 'Assets.xlsx';
+    link.download = "Assets.xlsx";
     link.click();
   }
 
-
   return (
     <>
-    <Topbar1>
-      <div id="wrapper">
-        {/* Begin Page Content */}
-        <div className="container-fluid">
-          {/* Page Heading */}
-          <h1 className="h3 mb-2 text-gray-800">Assets
-            <a
-              href="#"
-              className="d-none d-sm-inline-block btn btn-sm btn-success shadow float-right"
-            >
-              <button
-                style={{ fontWeight: "bold", marginRight: 10, background: "transparent", border: "none", color: "white" }}
-                onClick={exportToExcel}
+      <Topbar1>
+        <div id="wrapper">
+          {/* Begin Page Content */}
+          <div className="container-fluid">
+            {/* Page Heading */}
+            <h1 className="h3 mb-2 text-gray-800">
+              Assets
+              <a
+                href="#"
+                className="d-none d-sm-inline-block btn btn-sm btn-success shadow float-right"
               >
-                Generate Report
-              </button>
-              <i className="fas fa-file-excel" />
-            </a>
-          </h1>
-          {/* DataTales Example */}
-          <div className="card shadow mb-4">
-            <div className="card-header py-3">
-              <h4 className="m-0 font-weight-bold text-primary">
-                View Assets
-                <Link to="/asset_add">
-                  <button
-                    type="button"
-                    className="btn btn-primary float-right"
+                <button
+                  style={{
+                    fontWeight: "bold",
+                    marginRight: 10,
+                    background: "transparent",
+                    border: "none",
+                    color: "white",
+                  }}
+                  onClick={exportToExcel}
+                >
+                  Generate Report
+                </button>
+                <i className="fas fa-file-excel" />
+              </a>
+            </h1>
+            {/* DataTales Example */}
+            <div className="card shadow mb-4">
+              <div className="card-header py-3">
+                <h4 className="m-0 font-weight-bold text-primary">
+                  View Assets
+                  <Link to="/asset_add">
+                    <button
+                      type="button"
+                      className="btn btn-primary float-right"
+                    >
+                      Add Asset
+                    </button>
+                  </Link>
+                </h4>
+                <table className="filter-table">
+                  <div className="rectangle">
+                    <div className="cell1 ">
+                      <form>
+                        <label htmlFor="startDateInput">From </label>
+                        <input
+                          type="date"
+                          id="startDateInput"
+                          name="startDateInput"
+                          value={startDate}
+                          style={{ width: 180 }}
+                          onChange={handleStartDateChange}
+                        />
+                      </form>
+                    </div>
+                    <div className="cell1">
+                      <form>
+                        <label htmlFor="endDateInput">To </label>
+                        <input
+                          type="date"
+                          id="endDateInput"
+                          name="endDateInput"
+                          value={endDate}
+                          style={{ width: 180 }}
+                          onChange={handleEndDateChange}
+                        />
+                      </form>
+                    </div>
 
-                  >
-                    Add Asset
-                  </button>
-                </Link>
-              </h4>
-              <table className="filter-table">
-                <tbody>
+                    <div className="cell1">
+                      <form id="filterForm">
+                        <label htmlFor="categoryFilter">Status </label>
+                        <select
+                          name="category"
+                          id="categoryFilter"
+                          value={filter}
+                          onChange={handleFilterChange}
+                          style={{ width: 180 }}
+                        >
+                          <option value="Status">Status</option>
+                          <option value="Live">Live</option>
+                          <option value="New">New</option>
+                          <option value="Scrap">Scrap</option>
+                          <option value="Standby">Standby</option>
+                        </select>
+                      </form>
+                    </div>
+                    <div className="cell1">
+                      <form onSubmit={handleSearchSubmit}>
+                        <input
+                          type="text"
+                          id="searchInput"
+                          name="searchInput"
+                          placeholder="Search..."
+                          value={searchInput}
+                          onChange={(e) => setSearchInput(e.target.value)}
+                          style={{ width: 180 }}
+                        />
+                        <button type="submit" id="searchButton">
+                          Search
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </table>
+              </div>
+              <table
+                className="table table-bordered"
+                id="Assettable"
+                width="100%"
+                cellSpacing={0}
+              >
+                <thead style={{ backgroundColor: "#3c63e1", color: "white" }}>
                   <tr>
-                    <td className="right">
-                      <div className="rectangle">
-                        <div className="cell1 ">
-                          <form>
-                            <label htmlFor="startDateInput">From </label>
-                            <input
-                              type="date"
-                              id="startDateInput"
-                              name="startDateInput"
-                              value={startDate}
-                              style={{ width: 180 }}
-                              onChange={handleStartDateChange}
-                            />
-                          </form>
-                        </div>
-                        <div className="cell1">
-                          <form>
-                            <label htmlFor="endDateInput">To </label>
-                            <input
-                              type="date"
-                              id="endDateInput"
-                              name="endDateInput"
-                              value={endDate}
-                              style={{ width: 180 }}
-                              onChange={handleEndDateChange}
-                            />
-                          </form>
-                        </div>
-
-                        <div className="cell1" >
-                          <form id="filterForm">
-                            <label htmlFor="categoryFilter">Status </label>
-                            <select
-                              name="category"
-                              id="categoryFilter"
-                              value={filter}
-                              onChange={handleFilterChange}
-                              style={{ width: 180 }}
-                            >
-                              <option value="Status">Status</option>
-                              <option value="Live">Live</option>
-                              <option value="New">New</option>
-                              <option value="Scrap">Scrap</option>
-                              <option value="Standby">Standby</option>
-                            </select>
-                          </form>
-                        </div>
-                        <div className="cell1">
-                          <form onSubmit={handleSearchSubmit}>
-                            <input
-                              type="text"
-                              id="searchInput"
-                              name="searchInput"
-                              placeholder="Search..."
-                              value={searchInput}
-                              onChange={(e) => setSearchInput(e.target.value)}
-                              style={{ width: 180 }}
-                            />
-                            <button type="submit" id="searchButton">
-                              Search
-                            </button>
-                          </form>
-                        </div>
-
-
-                      </div>
-                    </td>
+                    <th>Sl.No</th>
+                    <th>Asset Id</th>
+                    <th>Serial No</th>
+                    <th>Host</th>
+                    <th>Username</th>
+                    <th>User Department</th>
+                    <th>Status</th>
+                    <th>Action</th>
                   </tr>
-                </tbody>
-              </table>
-            </div>
-            <table
-              className="table table-bordered"
-              id="Assettable"
-              width="100%"
-              cellSpacing={0}
-            >
-              <thead style={{ backgroundColor: "#3c63e1", color: "white" }}>
-                <tr>
-                  <th>Sl.No</th>
-                  <th>Asset Id</th>
-                  <th>Serial No</th>
-                  <th>Host</th>
-                  <th>Username</th>
-                  <th>User Department</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredData.map((item, index) => (
-                  <tr key={index}>
-                    <td> {index + 1}</td>
-                    <td className='AssetIdStyle' onClick={() => handleOpen(item)}>{item.Asset_id}</td>
-                    <td>{item.Asset_sl_no}</td>
-                    <td>{item.Asset_host_name}</td>
-                    <td>{item.Username}</td>
-                    <td>{item.Dept_name}</td>
-                    <td>{item.Asset_status}</td>
-                    <td>
-                      <button
-                        style={{
-                          backgroundColor: "transparent",
-                          border: "none",
-                          paddingLeft: 0,
-                          color: "blue"
-                        }}
+                </thead>
+                <tbody>
+                  {filteredData.map((item, index) => (
+                    <tr key={index}>
+                      <td> {index + 1}</td>
+                      <td
+                        className="AssetIdStyle"
+                        onClick={() => handleOpen(item)}
                       >
-                        <EditIcon baseclassname="fas" className="fa-plus-circle" sx={{ fontSize: 30 }} onClick={() => handleEditClick(item)} />
-                      </button>
+                        {item.Asset_id}
+                      </td>
+                      <td>{item.Asset_sl_no}</td>
+                      <td>{item.Asset_host_name}</td>
+                      <td>{item.Username}</td>
+                      <td>{item.Dept_name}</td>
+                      <td>{item.Asset_status}</td>
+                      <td>
+                        <button
+                          style={{
+                            backgroundColor: "transparent",
+                            border: "none",
+                            paddingLeft: 0,
+                            color: "blue",
+                          }}
+                        >
+                          <EditIcon
+                            baseclassname="fas"
+                            className="fa-plus-circle"
+                            sx={{ fontSize: 30 }}
+                            onClick={() => handleEditClick(item)}
+                          />
+                        </button>
+                        <Modal open={isEditModalOpen} onClose={handleClose}>
+                          {editedAsset && (
+                            <Fade in={isEditModalOpen}>
+                              <Box className="asset_list_modal2">
+                                <Typography
+                                  variant="h4"
+                                  style={{
+                                    color: "white",
+                                    background: "#3c63e1",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  Asset Modification
+                                </Typography>
+
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "space-evenly",
+                                    flexDirection: "column",
+                                  }}
+                                >
+                                  <div>
+                                    {/* Asset details */}
+                                    <TextField
+                                      label="Asset Type"
+                                      multiline
+                                      rows={1}
+                                      value={assettype}
+                                      variant="outlined"
+                                      style={AMstyle}
+                                      onChange={handleAssettypeChange}
+                                      InputProps={{
+                                        readOnly: true,
+                                      }}
+                                    />
+
+                                    <TextField
+                                      label="Serial No"
+                                      multiline
+                                      rows={1}
+                                      value={serialno}
+                                      variant="outlined"
+                                      style={AMstyle}
+                                      onChange={handleSerialnoChange}
+                                      InputProps={{
+                                        readOnly: true,
+                                      }}
+                                    />
+                                    <TextField
+                                      label="Make"
+                                      multiline
+                                      rows={1}
+                                      value={make}
+                                      variant="outlined"
+                                      style={AMstyle}
+                                      onChange={handleMakeChange}
+                                      InputProps={{
+                                        readOnly: true,
+                                      }}
+                                    />
+                                    <TextField
+                                      label="Model"
+                                      multiline
+                                      rows={1}
+                                      value={model}
+                                      variant="outlined"
+                                      style={AMstyle}
+                                      onChange={handleModelChange}
+                                      InputProps={{
+                                        readOnly: true,
+                                      }}
+                                    />
+                                  </div>
+
+                                  {/* Fourth column */}
+                                  <div>
+                                    {/* Additional information text areas */}
+
+                                    <TextField
+                                      label="PO No"
+                                      multiline
+                                      rows={1}
+                                      value={pono}
+                                      variant="outlined"
+                                      style={AMstyle}
+                                      onChange={handlePonoChange}
+                                      InputProps={{
+                                        readOnly: true,
+                                      }}
+                                    />
+                                    <TextField
+                                      label="PO Date"
+                                      multiline
+                                      rows={1}
+                                      value={formattedPo}
+                                      variant="outlined"
+                                      style={AMstyle}
+                                      onChange={handlePodateChange}
+                                      InputProps={{
+                                        readOnly: true,
+                                      }}
+                                    />
+
+                                    <TextField
+                                      label="Invoice No"
+                                      multiline
+                                      rows={1}
+                                      value={invoiceno}
+                                      variant="outlined"
+                                      style={AMstyle}
+                                      onChange={handleInvoicenoChange}
+                                      InputProps={{
+                                        readOnly: true,
+                                      }}
+                                    />
+
+                                    <TextField
+                                      label="Invoice Date"
+                                      multiline
+                                      rows={1}
+                                      value={formattedInvoice}
+                                      variant="outlined"
+                                      style={AMstyle}
+                                      onChange={handleInvoicedateChange}
+                                      InputProps={{
+                                        readOnly: true,
+                                      }}
+                                    />
+                                  </div>
+                                  <div>
+                                    <TextField
+                                      label="Operating System"
+                                      multiline
+                                      rows={1}
+                                      value={os}
+                                      variant="outlined"
+                                      style={AMstyle1}
+                                      onChange={handleOsChange}
+                                    />
+
+                                    <TextField
+                                      label="Key Specification"
+                                      multiline
+                                      rows={1}
+                                      value={key}
+                                      variant="outlined"
+                                      style={AMstyle1}
+                                      onChange={handleKeyChange}
+                                    />
+
+                                    <TextField
+                                      label="Warranty End Date"
+                                      multiline
+                                      rows={1}
+                                      value={formattedWarranty}
+                                      variant="outlined"
+                                      style={AMstyle}
+                                      onChange={handleWarrantyChange}
+                                      InputProps={{
+                                        readOnly: true,
+                                      }}
+                                    />
+
+                                    <TextField
+                                      label="Date of Installation"
+                                      multiline
+                                      rows={1}
+                                      value={formattedDoi}
+                                      variant="outlined"
+                                      style={AMstyle}
+                                      onChange={handleDateofinstallChange}
+                                      InputProps={{
+                                        readOnly: true,
+                                      }}
+                                    />
+                                  </div>
+
+                                  <div>
+                                    <TextField
+                                      label="MS Office Version"
+                                      multiline
+                                      rows={1}
+                                      value={mso}
+                                      variant="outlined"
+                                      style={AMstyle1}
+                                      onChange={handleMsoChange}
+                                    />
+
+                                    <TextField
+                                      label="Department"
+                                      multiline
+                                      rows={1}
+                                      value={userdept}
+                                      variant="outlined"
+                                      style={AMstyle}
+                                      onChange={handleUserdeptChange}
+                                      InputProps={{
+                                        readOnly: true,
+                                      }}
+                                    />
+                                    <TextField
+                                      label="User ID"
+                                      multiline
+                                      rows={1}
+                                      value={userid}
+                                      variant="outlined"
+                                      style={AMstyle1}
+                                      onChange={handleUseridChange}
+                                    />
+                                    <TextField
+                                      label="Username"
+                                      multiline
+                                      rows={1}
+                                      value={username}
+                                      variant="outlined"
+                                      onChange={handleUsernameChange}
+                                      style={AMstyle}
+                                      InputProps={{
+                                        readOnly: true,
+                                      }}
+                                    />
+                                  </div>
+
+                                  <div>
+                                    <TextField
+                                      label="IP No"
+                                      multiline
+                                      rows={1}
+                                      value={ip}
+                                      variant="outlined"
+                                      style={AMstyle1}
+                                      onChange={handleIpChange}
+                                    />
+
+                                    <TextField
+                                      label="Host Name"
+                                      multiline
+                                      rows={1}
+                                      value={hostname}
+                                      variant="outlined"
+                                      style={AMstyle1}
+                                      onChange={handleHostnameChange}
+                                    />
+
+                                    <TextField
+                                      label="Remarks"
+                                      multiline
+                                      rows={1}
+                                      value={remarks}
+                                      variant="outlined"
+                                      style={{
+                                        margin: "1rem",
+                                        width: "calc(2 * 200px)",
+                                      }}
+                                      onChange={handleRemarksChange}
+                                    />
+
+                                    <FormControl
+                                      component="fieldset"
+                                      style={{
+                                        marginLeft: "300px",
+                                        marginTop: "1em",
+                                      }}
+                                    >
+                                      <FormLabel
+                                        component="legend"
+                                        style={{ textAlign: "center" }}
+                                      >
+                                        Status
+                                      </FormLabel>
+                                      <RadioGroup
+                                        row
+                                        aria-label="status"
+                                        name="status"
+                                        value={status}
+                                        onChange={handleStatusChange}
+                                      >
+                                        <FormControlLabel
+                                          disabled
+                                          value="New"
+                                          control={<Radio />}
+                                          label="New"
+                                        />
+                                        <FormControlLabel
+                                          value="Live"
+                                          control={<Radio />}
+                                          label="Live"
+                                        />
+                                        <FormControlLabel
+                                          value="Standby"
+                                          control={<Radio />}
+                                          label="Standby"
+                                        />
+                                        <FormControlLabel
+                                          value="Scrap"
+                                          control={<Radio />}
+                                          label="Scrap"
+                                        />
+                                      </RadioGroup>
+                                    </FormControl>
+                                  </div>
+                                </div>
+                                <div className="d-flex flex-row justify-content-center">
+                                  <Button
+                                    variant="contained"
+                                    color="error"
+                                    onClick={handleClose}
+                                    style={{
+                                      backgroundColor: red[500],
+                                      width: 3,
+                                      marginRight: "1%",
+                                    }}
+                                  >
+                                    Close
+                                  </Button>
+                                  <Button
+                                    variant="contained"
+                                    color="error"
+                                    onClick={handleModificationSubmit}
+                                    style={{
+                                      backgroundColor: blue[500],
+                                      width: 3,
+                                      marginLeft: "1%",
+                                    }}
+                                  >
+                                    Modify
+                                  </Button>
+                                </div>
+                              </Box>
+                            </Fade>
+                          )}
+                        </Modal>
+                      </td>
+
                       <Modal
-                        open={isEditModalOpen}
-                        onClose={handleClose}                  
+                        open={open}
+                        onClose={handleClose}
+                        // closeAfterTransition
+                        // BackdropComponent={Backdrop}
+                        // BackdropProps={{
+                        //   timeout: 500,
+                        // }}
                       >
-                        {editedAsset && (
-                          <Fade in={isEditModalOpen}>
-                            <Box className='asset_list_modal2'>
-                              <Typography variant="h4" style={{ color: 'white', background: '#3c63e1', textAlign: 'center' }}>
-                                Asset Modification
+                        {selectedAsset && (
+                          <Fade in={open}>
+                            <Box className="asset_list_modal1">
+                              <Typography
+                                variant="h4"
+                                style={{
+                                  color: "white",
+                                  background: "#3c63e1",
+                                  textAlign: "center",
+                                }}
+                              >
+                                IT Asset Details
                               </Typography>
-
-
-                              <div style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column' }}>
-
-
+                              <div
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "space-evenly",
+                                  flexDirection: "column",
+                                }}
+                              >
                                 <div>
                                   {/* Asset details */}
                                   <TextField
@@ -610,21 +977,11 @@ const Asset_list = () => {
                                     rows={1}
                                     value={assettype}
                                     variant="outlined"
-                                    style={AMstyle}
-                                    onChange={handleAssettypeChange}
-                                    InputProps={{
-                                      readOnly: true,
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
                                     }}
-                                  />
-
-                                  <TextField
-                                    label="Serial No"
-                                    multiline
-                                    rows={1}
-                                    value={serialno}
-                                    variant="outlined"
-                                    style={AMstyle}
-                                    onChange={handleSerialnoChange}
                                     InputProps={{
                                       readOnly: true,
                                     }}
@@ -635,8 +992,11 @@ const Asset_list = () => {
                                     rows={1}
                                     value={make}
                                     variant="outlined"
-                                    style={AMstyle}
-                                    onChange={handleMakeChange}
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
+                                    }}
                                     InputProps={{
                                       readOnly: true,
                                     }}
@@ -647,32 +1007,43 @@ const Asset_list = () => {
                                     rows={1}
                                     value={model}
                                     variant="outlined"
-                                    style={AMstyle}
-                                    onChange={handleModelChange}
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
+                                    }}
                                     InputProps={{
                                       readOnly: true,
                                     }}
                                   />
-
-
-
+                                  <TextField
+                                    label="Serial No"
+                                    multiline
+                                    rows={1}
+                                    value={serialno}
+                                    variant="outlined"
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
+                                    }}
+                                    InputProps={{
+                                      readOnly: true,
+                                    }}
+                                  />
                                 </div>
-
-
-
-
-                                {/* Fourth column */}
                                 <div>
-                                  {/* Additional information text areas */}
-
                                   <TextField
                                     label="PO No"
                                     multiline
                                     rows={1}
                                     value={pono}
                                     variant="outlined"
-                                    style={AMstyle}
-                                    onChange={handlePonoChange}
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
+                                    }}
                                     InputProps={{
                                       readOnly: true,
                                     }}
@@ -683,71 +1054,73 @@ const Asset_list = () => {
                                     rows={1}
                                     value={formattedPo}
                                     variant="outlined"
-                                    style={AMstyle}
-                                    onChange={handlePodateChange}
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
+                                    }}
                                     InputProps={{
                                       readOnly: true,
                                     }}
                                   />
-
                                   <TextField
                                     label="Invoice No"
                                     multiline
                                     rows={1}
                                     value={invoiceno}
                                     variant="outlined"
-                                    style={AMstyle}
-                                    onChange={handleInvoicenoChange}
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
+                                    }}
                                     InputProps={{
                                       readOnly: true,
                                     }}
                                   />
-
                                   <TextField
                                     label="Invoice Date"
                                     multiline
                                     rows={1}
                                     value={formattedInvoice}
                                     variant="outlined"
-                                    style={AMstyle}
-                                    onChange={handleInvoicedateChange}
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
+                                    }}
                                     InputProps={{
                                       readOnly: true,
                                     }}
                                   />
-
-
                                 </div>
                                 <div>
-
                                   <TextField
                                     label="Operating System"
                                     multiline
                                     rows={1}
                                     value={os}
                                     variant="outlined"
-                                    style={AMstyle1}
-                                    onChange={handleOsChange}
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
+                                    }}
+                                    InputProps={{
+                                      readOnly: true,
+                                    }}
                                   />
-
                                   <TextField
                                     label="Key Specification"
                                     multiline
                                     rows={1}
                                     value={key}
                                     variant="outlined"
-                                    style={AMstyle1}
-                                    onChange={handleKeyChange}
-                                  />
-
-                                  <TextField
-                                    label="Warranty End Date"
-                                    multiline
-                                    rows={1}
-                                    value={formattedWarranty}
-                                    variant="outlined"
-                                    style={AMstyle}
-                                    onChange={handleWarrantyChange}
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
+                                    }}
                                     InputProps={{
                                       readOnly: true,
                                     }}
@@ -759,15 +1132,31 @@ const Asset_list = () => {
                                     rows={1}
                                     value={formattedDoi}
                                     variant="outlined"
-                                    style={AMstyle}
-                                    onChange={handleDateofinstallChange}
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
+                                    }}
                                     InputProps={{
                                       readOnly: true,
                                     }}
                                   />
-
+                                  <TextField
+                                    label="Warranty End Date"
+                                    multiline
+                                    rows={1}
+                                    value={formattedWarranty}
+                                    variant="outlined"
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
+                                    }}
+                                    InputProps={{
+                                      readOnly: true,
+                                    }}
+                                  />
                                 </div>
-
                                 <div>
                                   <TextField
                                     label="MS Office Version"
@@ -775,18 +1164,26 @@ const Asset_list = () => {
                                     rows={1}
                                     value={mso}
                                     variant="outlined"
-                                    style={AMstyle1}
-                                    onChange={handleMsoChange}
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
+                                    }}
+                                    InputProps={{
+                                      readOnly: true,
+                                    }}
                                   />
-
                                   <TextField
                                     label="Department"
                                     multiline
                                     rows={1}
                                     value={userdept}
                                     variant="outlined"
-                                    style={AMstyle}
-                                    onChange={handleUserdeptChange}
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
+                                    }}
                                     InputProps={{
                                       readOnly: true,
                                     }}
@@ -797,8 +1194,14 @@ const Asset_list = () => {
                                     rows={1}
                                     value={userid}
                                     variant="outlined"
-                                    style={AMstyle1}
-                                    onChange={handleUseridChange}
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
+                                    }}
+                                    InputProps={{
+                                      readOnly: true,
+                                    }}
                                   />
                                   <TextField
                                     label="Username"
@@ -806,28 +1209,31 @@ const Asset_list = () => {
                                     rows={1}
                                     value={username}
                                     variant="outlined"
-                                    onChange={handleUsernameChange}
-                                    style={AMstyle}
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
+                                    }}
                                     InputProps={{
                                       readOnly: true,
                                     }}
-
                                   />
-
-
                                 </div>
-
-                                <div  >
-
+                                <div>
                                   <TextField
                                     label="IP No"
                                     multiline
                                     rows={1}
                                     value={ip}
                                     variant="outlined"
-                                    style={AMstyle1}
-                                    onChange={handleIpChange}
-
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
+                                    }}
+                                    InputProps={{
+                                      readOnly: true,
+                                    }}
                                   />
 
                                   <TextField
@@ -836,10 +1242,31 @@ const Asset_list = () => {
                                     rows={1}
                                     value={hostname}
                                     variant="outlined"
-                                    style={AMstyle1}
-                                    onChange={handleHostnameChange}
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
+                                    }}
+                                    InputProps={{
+                                      readOnly: true,
+                                    }}
                                   />
 
+                                  <TextField
+                                    label="Status"
+                                    multiline
+                                    rows={1}
+                                    value={status}
+                                    variant="outlined"
+                                    style={{
+                                      margin: "1rem",
+                                      pointerEvents: "none",
+                                      cursor: "initial",
+                                    }}
+                                    InputProps={{
+                                      readOnly: true,
+                                    }}
+                                  />
 
                                   <TextField
                                     label="Remarks"
@@ -847,327 +1274,41 @@ const Asset_list = () => {
                                     rows={1}
                                     value={remarks}
                                     variant="outlined"
-                                    style={{ margin: '1rem', width: 'calc(2 * 200px)' }}
-                                    onChange={handleRemarksChange}
-
-
+                                    style={{
+                                      margin: "1rem",
+                                      width: "calc(3 * 200px )",
+                                    }}
                                   />
-
-                                  <FormControl component="fieldset" style={{ marginLeft: '300px', marginTop: '1em' }}>
-                                    <FormLabel component="legend" style={{ textAlign: "center" }}>Status</FormLabel>
-                                    <RadioGroup row aria-label="status" name="status" value={status} onChange={handleStatusChange}>
-                                      <FormControlLabel disabled value="New" control={<Radio />} label="New" />
-                                      <FormControlLabel value="Live" control={<Radio />} label="Live" />
-                                      <FormControlLabel value="Standby" control={<Radio />} label="Standby" />
-                                      <FormControlLabel value="Scrap" control={<Radio />} label="Scrap" />
-                                    </RadioGroup>
-                                  </FormControl>
                                 </div>
-
                               </div>
-                              <div className='d-flex flex-row justify-content-center'>
-
+                              <div className="d-flex flex-row justify-content-center">
                                 <Button
                                   variant="contained"
                                   color="error"
                                   onClick={handleClose}
-                                  style={{ backgroundColor: red[500], width: 3, marginRight: "1%" }}
-                                >Close</Button>
-                                <Button
-
-                                  variant="contained"
-                                  color="error"
-                                  onClick={handleModificationSubmit}
-                                  style={{ backgroundColor: blue[500], width: 3, marginLeft: "1%" }}
-                                >Modify</Button>
+                                  style={{
+                                    backgroundColor: red[500],
+                                    width: 3,
+                                    marginRight: "1%",
+                                  }}
+                                >
+                                  Close
+                                </Button>
                               </div>
-
                             </Box>
                           </Fade>
                         )}
                       </Modal>
-
-                    </td>
-
-                    <Modal
-                      open={open}
-                      onClose={handleClose}
-                    // closeAfterTransition
-                    // BackdropComponent={Backdrop}
-                    // BackdropProps={{
-                    //   timeout: 500,
-                    // }}
-                    >
-                      {selectedAsset && (
-                        <Fade in={open}>
-                          <Box className='asset_list_modal1'>
-                            <Typography variant="h4" style={{ color: 'white', background: '#3c63e1', textAlign: 'center' }}>
-                              IT Asset Details
-                            </Typography>
-                            <div style={{ display: 'flex', justifyContent: 'space-evenly', flexDirection: 'column' }}>
-                              <div>
-                                {/* Asset details */}
-                                <TextField
-                                  label="Asset Type"
-                                  multiline
-                                  rows={1}
-                                  value={assettype}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-                                <TextField
-                                  label="Make"
-                                  multiline
-                                  rows={1}
-                                  value={make}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-                                <TextField
-                                  label="Model"
-                                  multiline
-                                  rows={1}
-                                  value={model}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-                                <TextField
-                                  label="Serial No"
-                                  multiline
-                                  rows={1}
-                                  value={serialno}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-                              </div>
-                              <div>
-                                <TextField
-                                  label="PO No"
-                                  multiline
-                                  rows={1}
-                                  value={pono}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-                                <TextField
-                                  label="PO Date"
-                                  multiline
-                                  rows={1}
-                                  value={formattedPo}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-                                <TextField
-                                  label="Invoice No"
-                                  multiline
-                                  rows={1}
-                                  value={invoiceno}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-                                <TextField
-                                  label="Invoice Date"
-                                  multiline
-                                  rows={1}
-                                  value={formattedInvoice}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-
-                              </div>
-                              <div>
-
-                                <TextField
-                                  label="Operating System"
-                                  multiline
-                                  rows={1}
-                                  value={os}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-                                <TextField
-                                  label="Key Specification"
-                                  multiline
-                                  rows={1}
-                                  value={key}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-
-                                <TextField
-                                  label="Date of Installation"
-                                  multiline
-                                  rows={1}
-                                  value={formattedDoi}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-                                <TextField
-                                  label="Warranty End Date"
-                                  multiline
-                                  rows={1}
-                                  value={formattedWarranty}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-
-                              </div>
-                              <div>
-
-                                <TextField
-                                  label="MS Office Version"
-                                  multiline
-                                  rows={1}
-                                  value={mso}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-                                <TextField
-                                  label="Department"
-                                  multiline
-                                  rows={1}
-                                  value={userdept}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-                                <TextField
-                                  label="User ID"
-                                  multiline
-                                  rows={1}
-                                  value={userid}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-                                <TextField
-                                  label="Username"
-                                  multiline
-                                  rows={1}
-                                  value={username}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-
-                              </div>
-                              <div  >
-
-                                <TextField
-                                  label="IP No"
-                                  multiline
-                                  rows={1}
-                                  value={ip}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-
-                                <TextField
-                                  label="Host Name"
-                                  multiline
-                                  rows={1}
-                                  value={hostname}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-
-                                <TextField
-                                  label="Status"
-                                  multiline
-                                  rows={1}
-                                  value={status}
-                                  variant="outlined"
-                                  style={{ margin: '1rem', pointerEvents: "none", cursor: "initial" }}
-                                  InputProps={{
-                                    readOnly: true,
-                                  }}
-                                />
-
-                                  <TextField
-                                    label="Remarks"
-                                    multiline
-                                    rows={1}
-                                    value={remarks}
-                                    variant="outlined"
-                                    style={{ margin: '1rem', width: 'calc(3 * 200px )' }}                                    
-                                  />
-                              </div>
-                            </div>
-                            <div className='d-flex flex-row justify-content-center'>
-                              <Button
-                                variant="contained"
-                                color="error"
-                                onClick={handleClose}
-                                style={{ backgroundColor: red[500], width: 3, marginRight: "1%" }}
-                              >Close</Button>
-                            </div>
-                          </Box>
-                        </Fade>
-                      )}
-                    </Modal>
-
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
       </Topbar1>
     </>
-
   );
-}
+};
 
 export default Asset_list;

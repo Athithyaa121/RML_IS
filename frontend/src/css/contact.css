@@ -121,13 +121,3 @@
     height: 60px;
   }
   
-  /* Topbar brand text styles */
-  .topbar-brand-text {
-    font-size: 30px;
-    color: white;
-    text-align: center;
-    padding-left: 400px;
-    font-family: Garamond;
-    font-weight: bold;
-  }
-  

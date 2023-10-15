@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import '../css/raise_ticket.css';
+import '../css/tickets.css';
 import '../css/topbar1.css';
 import '../vendor/fontawesome-free/css/all.min.css';
 import axios from 'axios';
 import Topbar1 from './topbar1';
+
 
 const Raise_Ticket = () => {
 
@@ -115,12 +116,10 @@ const Raise_Ticket = () => {
                   <div className="form-icon-rt">
                     <i className="fas fa-industry" />
                   </div>
-                  <label className="form-input-rt" placeholder="Plant Code">
-                    Plant Code
-                  </label>
+                  
                   <input
-                    
-                    className="form-autofill-rt"
+                    placeholder="Plant Code"
+                    className="form-input-rt"
                     autoComplete="plant"
                     readOnly
                     value={plantCode}
@@ -132,14 +131,10 @@ const Raise_Ticket = () => {
                 <div className="form-line-rt">
                   <div className="form-icon-rt">
                     <i className="fas fa-calendar" />
-                  </div>
-                  <label className="form-input-rt" placeholder="Date">
-                    Date
-                  </label>
+                  </div>                  
                   <input
-                    className="form-autofill-rt"
-                    required=""
-                    placeholder="dd/mm/yyyy"
+                  className="form-input-rt"
+                   placeholder="Date"                    required=""
                     autoComplete="date"
                     readOnly=""
                     value={formattedDate}
@@ -152,17 +147,15 @@ const Raise_Ticket = () => {
                 <div className="form-line-rt">
                   <div className="form-icon-rt">
                     <i className="fas fa-laptop" />
-                  </div>
-                  <label className="form-input-rt" placeholder="Asset">
-                    Select Your Asset
-                  </label>
+                  </div>                  
                   <select
-                    className="form-ans-rt"
+                    className="form-input-rt" 
+                    placeholder="Asset"                    
                     name="Asset"
                     value={asset}
                     onChange={(event) => setAsset(event.target.value)}
                     required="">
-                    <option disabled="" />
+                    <option disabled="" >Select your Asset</option>
                     {assetCode && assetCode.map((code, index) => (
                       <option key={index} value={code.Asset_id}>
                         {code.Asset_make}
@@ -170,15 +163,14 @@ const Raise_Ticket = () => {
                     ))}
                   </select>
                 </div>
-                <div className="form-line-rt">
+                <div className="form-line1-rt">
                   <div className="form-icon-rt">
                     <i className="fas fa-wrench" />
                   </div>
-                  <label className="form-input-rt" placeholder="service">
-                    Service type
-                  </label>
+                  <h6>Service Type :</h6>
                   <label className="form-checkbox-rt">
                     <input
+                     placeholder="service"
                       type="radio"
                       name="option"
                       defaultValue="hardware"
@@ -206,17 +198,14 @@ const Raise_Ticket = () => {
               <div className="form-line-rt">
                 <div className="form-icon-rt">
                   <i className="fas fa-box" />
-                </div>
-                <label className="form-input-rt" placeholder="product">
-                  Select Product
-                </label>
+                </div>                
                 <select
-                  className="form-ans-rt"
+                  className="form-select-rt"
                   name="product"
                   value={product}
                   onChange={(event) => setProduct(event.target.value)}
                   required="">
-                  <option disabled="" />
+                  <option value='0' >Select Product</option>
                   {productCode && productCode.map((code, index) => (
                     <option key={index} value={code.Product_id}>
                       {code.Product_name}
@@ -227,17 +216,14 @@ const Raise_Ticket = () => {
               <div className="form-line-rt">
                 <div className="form-icon-rt">
                   <i className="fas fa-cogs" />
-                </div>
-                <label className="form-input-rt" placeholder="product">
-                  Service Category
-                </label>
+                </div>                
                 <select
-                  className="form-ans-rt"
+                  className="form-select-rt"
                   name="service_category"
                   value={service}
                   onChange={(event) => setService(event.target.value)}
                   required="">
-                  <option disabled="" />
+                  <option value='0'>Service Category</option>
                   {serviceCode && serviceCode.map((code, index) => (
                     <option key={index} value={code.Service_category_id}>
                       {code.Service_category}
@@ -245,6 +231,7 @@ const Raise_Ticket = () => {
                   ))}
                 </select>
               </div>
+
 
               <div className="form-line-rt">
                 <div className="form-icon-rt">
@@ -254,10 +241,11 @@ const Raise_Ticket = () => {
                   Problem description
                 </label>
                 <textarea
+                  rows="4" 
+                   style={{width: "300px" ,minHeight: "10px",maxHeight: "300px",resize: "vertical",overflowY: "auto"}}
                   id="message"
                   name="message"
                   placeholder="Enter your message...."
-                  className="form-ans-desc-rt"
                   required=""
                   value={desc}
                   onChange={(event) => setDesc(event.target.value)}

@@ -6,7 +6,7 @@
   z-index: 1050;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color:rgba(0, 0, 0, 0.1); /* Semi-transparent background */
   overflow: hidden;
   outline: 0;
   display: flex;
@@ -17,7 +17,7 @@
 .modal-content {
   position: relative;
   z-index: 1;
-  max-width: 40%;
+  max-width: 30%;
   height: fit-content;
   margin: 0 auto;
   top: 0;
@@ -85,16 +85,13 @@
 }
 
 /* Styles for form inputs */
-form label {
+.form-label-master {
   font-weight: bold;
   margin-left:10px;
   margin-right: 50px;
-  
+  margin-top: 10px;
 }
 
-/* form group{
-  margin:10px;
-} */
 .form-input-master[type="number"],
 .form-input-master[type="text"] {
   width: 100%;
@@ -104,54 +101,9 @@ form label {
   right: 10;
   display: flex;
 }
-  table {
-    width: 600px;
-    border-collapse: collapse;
-  }
   
-  th,
-  td {
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .left {
-    width: 800px;
-    background-color: lightgray;
-  }
-  
-  .right {
-    width: 400px;
-  }
-  
-  .square {
-    width: 160px;
-    height: 160px;
-    margin: 20px auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .rectangle {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 10px;
-    margin: 20px auto;
-    width: 1180px;
-    align-items: left;
-    justify-content: left;
-  }
-  
-  .cell {
-    background-color: white;
-    display: flex;
-    align-items: left;
-    justify-content: left;
-    font-weight: bold;
-    color: black;
-    font-size: 18px;
-  }
-  
+.h4 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 5px!important;
+}

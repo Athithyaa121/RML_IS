@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Button, Modal, Form } from 'react-bootstrap';
-import '../css/users.css';
-import '../vendor/fontawesome-free/css/all.min.css';
+import '../../css/masters.css';
+import '../../vendor/fontawesome-free/css/all.min.css';
+import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { red } from '@mui/material/colors';
 import EditIcon from '@mui/icons-material/Edit';
 import { blue } from '@mui/material/colors';
 import * as XLSX from 'xlsx';
-import Topbar1 from './topbar1';
+import Topbar1 from '../topbar1';
 
-const Root_M = () => {
+
+const Service_Cat_M = () => {
   const [data, setData] = useState([]);
   const [modalShow1, setModalShow1] = React.useState(false);
   const [modalShow2, setModalShow2] = React.useState(false);
   const [modifiedCode, setModifiedCode] = useState('');
-  const [modifiedName, setModifiedName] = useState('');
+  const [modifiedType, setModifiedType] = useState('');
+  const [modifiedCategory, setModifiedCategory] = useState('');
   const [selectedMenuItem, setSelectedMenuItem] = useState(null);
   const [inputData, setInputData] = useState({
-    Root_id: '',
-    Root_cause: ''
+    Service_id: '',
+    Service_type: '',
+    Service_category:''
   });
 
   useEffect(() => {
     // Fetch data from the API endpoint
     axios
-      .get('http://localhost:3001/root_cause')
+      .get('http://localhost:3001/master/service_category')
       .then((response) => {
         setData(response.data);
       })
@@ -35,11 +38,11 @@ const Root_M = () => {
   }, []);
 
   useEffect(() => {
-    fetchRootCause();
+    fetchServiceCategory();
   }, []);
 
-  const fetchRootCause = () => {
-    axios.get('http://localhost:3001/root_cause')
+  const fetchServiceCategory = () => {
+    axios.get('http://localhost:3001/master/service_category')
       .then((response) => {
         setData(response.data);
       })
@@ -48,12 +51,16 @@ const Root_M = () => {
       });
   }
 
-  const handleNameChange = (event) => {
-    setInputData({...inputData, Root_cause : event.target.value});
+  const handleNumberChange = (e) => {
+      setInputData({...inputData, Service_id : e.target.value});
+  }
+
+  const handleTypeChange = (e) => {
+    setInputData({...inputData,Service_type : e.target.value});
   };
 
-  const handleidChange = (event) => {
-    setInputData({...inputData, Root_id : event.target.value});
+  const handleServiceChange = (e) => {
+    setInputData({...inputData,Service_category : e.target.value});
   };
 
   const userid = localStorage.getItem('userId');
@@ -65,27 +72,33 @@ const Root_M = () => {
 
   const handleAdd = () => {
     // Check constraints before making the API call
-    if (!inputData.Root_id) {
-      window.alert('Please enter a root cause ID');
+    if (!inputData.Service_id) {
+      window.alert('Please enter a service ID');
       return;
     }
   
-    if (!inputData.Root_cause) {
-      window.alert('Please enter a root cause');
+    if (!inputData.Service_type) {
+      window.alert('Please enter a service type');
+      return;
+    }
+  
+    if (!inputData.Service_category) {
+      window.alert('Please enter a service category');
       return;
     }
   
     axios
-      .post('http://localhost:3001/addRootCause', dataToSend)
+      .post('http://localhost:3001/addServiveCategory', dataToSend)
       .then((response) => {
-        fetchRootCause();
+        fetchServiceCategory();
         console.log(response.data); // Optional: Handle success response
         setInputData({
-          Root_id: '',
-          Root_cause: '',
+          Service_id: '',
+          Service_type: '',
+          Service_category: '',
         });
         handleModalClose1();
-        window.alert('RootCause added successfully');
+        window.alert('Service added successfully');
       })
       .catch((error) => {
         if (error.response && error.response.status === 400) {
@@ -98,32 +111,28 @@ const Root_M = () => {
   };
   
 
-  const handleDelete = (recordId, rootCauseName) => {
-    // Ask for confirmation before deleting
-    if (!window.confirm(`Are you sure you want to delete the root cause "${rootCauseName}"?`)) {
+  const handleDelete = (recordId, serviceName) => {
+    if (!window.confirm(`Are you sure you want to delete the service "${serviceName}"?`)) {
       return;
     }
 
     const requestData = {
       userid: userid,
-      // Add other data if needed
     };
+
   
     axios
-      .put(`http://localhost:3001/deleteRootCause/${recordId}`,requestData)
+      .put(`http://localhost:3001/deleteServiveCategory/${recordId}`, requestData)
       .then((response) => {
-        fetchRootCause();
+        fetchServiceCategory();
         console.log(response.data);
-        window.alert(`RootCause "${rootCauseName}" deleted successfully`);
-        // Optionally update your UI after successful deletion (e.g., fetch updated data)
+        window.alert(`Service "${serviceName}" deleted successfully`)
       })
       .catch((error) => {
         console.error(error);
-        // Optional: Handle error response
       });
   };
   
-
 
 
   const handleModalClose1 = () => {
@@ -138,57 +147,62 @@ const Root_M = () => {
     setModalShow2(false);
   };
 
-  const handleModalShow2 = () => {
+
+
+  //Modifying
+
+  const handleModalShow2 = (item) => {
+    setSelectedMenuItem(item.Service_category_id);
+    setModifiedCode(item.Service_category_id);
+    setModifiedType(item.Service_category_type);
+    setModifiedCategory(item.Service_category);
     setModalShow2(true);
   };
 
-//Modifying
-
-const handleModifyshow = (item) => {
-  setSelectedMenuItem(item.Root_cause_id);
-  setModifiedCode(item.Root_cause_id);
-  setModifiedName(item.Root_cause_name);
-  setModalShow2(true);
-};
-
-
-const handleModifiedNameChange = (event) => {
-  setModifiedName(event.target.value);
-};
-
-
-
-
-const handleModificationSubmit = () => {
-  // Check if required fields are empty
-  if (!modifiedCode || !modifiedName) {
-    window.alert('Please fill in all required fields');
-    return;
-  }
-
-  const updatedData = {
-    code: modifiedCode,
-    name: modifiedName,
-    userid: userid
+  
+  const handleModifiedTypeChange = (event) => {
+    setModifiedType(event.target.value);
+  };
+  
+  const handleModifiedCategoryChange = (event) => {
+    setModifiedCategory(event.target.value);
   };
 
-  axios
-    .put(`http://localhost:3001/modifyRootCause/${selectedMenuItem}`, updatedData)
-    .then((response) => {
-      // Handle the response
-      console.log(response.data);
-      // Optionally update your UI or perform any other actions
-      window.alert('RootCause updated successfully');
-      handleModalClose2();
-    })
-    .catch((error) => {
-      console.error(error);
-      // Handle the error
-    });
-};
+ 
+  const handleModificationSubmit = () => {
+    // Check if required fields are empty
+    if (!modifiedCode || !modifiedType || !modifiedCategory) {
+      window.alert('Please fill in all required fields');
+      return;
+    }
+  
+    const updatedData = {
+      code: modifiedCode,
+      type: modifiedType,
+      category: modifiedCategory,
+      userid: userid
+    };
+  
+    axios
+      .put(`http://localhost:3001/modifyServiceCategory/${selectedMenuItem}`, updatedData)
+      .then((response) => {
+        // Handle the response
+        console.log(response.data);
+        // Optionally update your UI or perform any other actions
+        window.alert('Service category updated successfully');
+        handleModalClose2();
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle the error
+      });
+  };
+  
+    
 
 
-  // EXCEL EXPORTING
+  
+// EXCEL EXPORTING
 
 
 
@@ -221,17 +235,14 @@ const handleModificationSubmit = () => {
     const excelUrl = URL.createObjectURL(excelData);
     const link = document.createElement('a');
     link.href = excelUrl;
-    link.download = 'Root_Cause_master.xlsx';
+    link.download = 'Service_Category.xlsx';
     link.click();
   }
-  
-
 
 
   return (
     <>
     <Topbar1>
-
       {/* Page Wrapper */}
       <div id="wrapper">
         {/* Begin Page Content */}
@@ -255,7 +266,7 @@ const handleModificationSubmit = () => {
           <div className="card shadow mb-4">
             <div className="card-header py-3">
               <h4 className="m-0 font-weight-bold text-primary">
-                Root Cause Master
+                Service Category Master
                 <>
 
                   {/* Button trigger modal */}
@@ -273,32 +284,41 @@ const handleModificationSubmit = () => {
                   </button>
                   <Modal show={modalShow1} onHide={handleModalClose1}>
                     <Modal.Header closeButton className='bg-primary text-white'>
-                      <Modal.Title >Add a Root Cause</Modal.Title>
+                      <Modal.Title >Add a Service Category</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                       <Form>
                         <Form.Group>
-                          <Form.Label>Root Cause ID:</Form.Label>
+                          <Form.Label>Service ID:</Form.Label>
                           <Form.Control
                             className='form-input-master'
                             type="number"
-                            value={inputData.Root_id}
-                            onChange={handleidChange}
+                            value={inputData.Service_id}
+                            onChange={handleNumberChange}
                           />
                         </Form.Group>
                         <Form.Group>
-                          <Form.Label>Root Cause Name:</Form.Label>
+                          <Form.Label>Service Type:</Form.Label>
                           <Form.Control
                             className='form-input-master'
                             type="text"
-                            value={inputData.Root_cause}
-                            onChange={handleNameChange}
+                            value={inputData.Service_type}
+                            onChange={handleTypeChange}
+                          />
+                        </Form.Group>
+                        <Form.Group>
+                          <Form.Label>Service Category:</Form.Label>
+                          <Form.Control
+                            className='form-input-master'
+                            type="text"
+                            value={inputData.Service_category}
+                            onChange={handleServiceChange}
                           />
                         </Form.Group>
                       </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                      <Button className='btn-danger' variant="" onClick={handleModalClose1}>
+                      <Button className='btn-danger' variant="" onClick={handleDelete}>
                         Decline
                       </Button>
                       <Button className='btn-success' variant="" onClick={handleAdd}>
@@ -322,19 +342,21 @@ const handleModificationSubmit = () => {
                   <thead style={{ backgroundColor: "#3c63e1", color: "white" }}>
                     <tr>
                       <th>Sl.No</th>
-                      <th>Root Cause ID</th>
-                      <th>Root Cause Name</th>
-                      <th>Action</th>
+                      <th>Service ID</th>
+                      <th>Service Type</th>
+                      <th>Service Category</th>
+                      <th> Modify</th>
                     </tr>
                   </thead>
                   <tbody>
                     {data.map((item, index) => (
-                      <tr key={item.id}>
+                      <tr key={index}>
                         <td> {index + 1}</td>
-
-                        <td>{item.Root_cause_id}</td>
-                        <td>{item.Root_cause_name}</td>
+                        <td> {item.Service_category_id}</td>
+                        <td>{item.Service_category_type}</td>
+                        <td>{item.Service_category}</td>
                         <td>
+
                           <button
                             style={{
                               backgroundColor: "transparent",
@@ -343,22 +365,21 @@ const handleModificationSubmit = () => {
                             }}
                           >
                             <EditIcon
-                              style={{ color: blue[800] }} onClick={() => handleModifyshow(item)}
+                              style={{ color: blue[800] }} onClick={() => handleModalShow2(item)}
                               baseclassname="fas"
                               className="fa-plus-circle"
                               sx={{ fontSize: 30 }}
                             />
                           </button>
-
                           {selectedMenuItem && (
                             <Modal show={modalShow2} onHide={handleModalClose2}>
                               <Modal.Header closeButton className="bg-primary text-white">
-                                <Modal.Title>Modify Root Cause</Modal.Title>
+                                <Modal.Title>Modify Service Category</Modal.Title>
                               </Modal.Header>
                               <Modal.Body>
                                 <Form onSubmit={handleModificationSubmit}>
                                   <Form.Group>
-                                    <Form.Label>Root Cause ID</Form.Label>
+                                    <Form.Label>Service Category ID:</Form.Label>
                                     <Form.Control
                                       className='form-input-master'
                                       type="text"
@@ -367,12 +388,21 @@ const handleModificationSubmit = () => {
                                     />
                                   </Form.Group>
                                   <Form.Group>
-                                    <Form.Label>Root Cause Name</Form.Label>
+                                    <Form.Label>Service Type</Form.Label>
                                     <Form.Control
                                       className='form-input-master'
                                       type="text"
-                                      value={modifiedName}
-                                      onChange={handleModifiedNameChange}
+                                      value={modifiedType}
+                                      onChange={handleModifiedTypeChange}
+                                    />
+                                  </Form.Group>
+                                  <Form.Group>
+                                    <Form.Label>Service Category</Form.Label>
+                                    <Form.Control
+                                      className='form-input-master'
+                                      type="text"
+                                      value={modifiedCategory}
+                                      onChange={handleModifiedCategoryChange}
                                     />
                                   </Form.Group>
                                   <Modal.Footer>
@@ -395,7 +425,7 @@ const handleModificationSubmit = () => {
                             <DeleteIcon
                               sx={{ color: red[500], fontSize: 30 }}
                               className="danger "
-                              onClick={() => handleDelete(item.Root_cause_id, item.Root_cause_name)}
+                              onClick={() => handleDelete(item.Service_category_id, item.Service_category)}
 
                             />
                           </button>
@@ -415,4 +445,4 @@ const handleModificationSubmit = () => {
   );
 }
 
-export default Root_M;
+export default Service_Cat_M;
